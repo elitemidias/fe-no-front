@@ -426,8 +426,10 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
   transition:border-color .35s ease,background .35s ease,transform .35s ease}
 .prod-mod::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;
   background:var(--gold);transition:height .4s ease}
-.prod-mod:hover{border-color:rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.10),rgba(201,162,39,.04));transform:translateY(-3px)}
-.prod-mod:hover::before{height:100%}
+@media(hover:hover){
+  .prod-mod:hover{border-color:rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.10),rgba(201,162,39,.04));transform:translateY(-3px)}
+  .prod-mod:hover::before{height:100%}
+}
 .prod-mod-num{font-family:'Bebas Neue';font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;opacity:.85}
 .prod-mod-name{font-family:'Bebas Neue';font-size:22px;letter-spacing:1.5px;color:var(--fg);text-transform:uppercase;line-height:1.05}
 .prod-mod-content{font-size:13px;color:var(--fgm);line-height:1.65;margin-top:2px}
@@ -1322,21 +1324,27 @@ function eudesSound(){
   btn.textContent = vid.muted ? '🔇 SOM' : '🔊 SOM';
 }
 
-// ── CAROUSEL LOCK — impede que o swipe horizontal arraste a página ──
+// ── CAROUSEL — scroll manual no eixo X, libera scroll Y da página ──
 document.querySelectorAll('.prod-mods-track').forEach(function(track){
-  var startX=0,startY=0,locked=false;
+  var startX=0,startY=0,startScroll=0,locked=null;
   track.addEventListener('touchstart',function(e){
     startX=e.touches[0].pageX;
     startY=e.touches[0].pageY;
-    locked=false;
+    startScroll=track.scrollLeft;
+    locked=null;
   },{passive:true});
   track.addEventListener('touchmove',function(e){
-    var dx=Math.abs(e.touches[0].pageX-startX);
-    var dy=Math.abs(e.touches[0].pageY-startY);
-    if(!locked){
-      if(dx>dy){locked=true;}
+    if(!e.cancelable)return;
+    var dx=e.touches[0].pageX-startX;
+    var dy=e.touches[0].pageY-startY;
+    if(locked===null){
+      if(Math.abs(dx)+Math.abs(dy)<6)return;
+      locked=Math.abs(dx)>Math.abs(dy);
     }
-    if(locked){e.preventDefault();}
+    if(locked){
+      e.preventDefault();
+      track.scrollLeft=startScroll-dx;
+    }
   },{passive:false});
 });
 
