@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fé no Front — Estratégia. Estrutura. Crescimento.</title>
+<template id="__bundler_thumbnail" data-bg-color="#0D0D0D">
+  <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- bg -->
+    <rect width="800" height="500" fill="#0D0D0D"/>
+    <!-- grid lines -->
+    <line x1="0" y1="125" x2="800" y2="125" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <line x1="0" y1="250" x2="800" y2="250" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <line x1="0" y1="375" x2="800" y2="375" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <line x1="200" y1="0" x2="200" y2="500" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <line x1="400" y1="0" x2="400" y2="500" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="500" stroke="rgba(201,162,39,0.08)" stroke-width="1"/>
+    <!-- radial glow -->
+    <radialGradient id="g" cx="50%" cy="45%" r="45%">
+      <stop offset="0%" stop-color="#C9A227" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <rect width="800" height="500" fill="url(#g)"/>
+    <!-- brand name -->
+    <text x="400" y="210" font-family="Impact,sans-serif" font-size="72" font-weight="700" fill="#C9A227" text-anchor="middle" letter-spacing="8">FÉ NO FRONT</text>
+    <!-- gold rule -->
+    <rect x="364" y="228" width="72" height="2" fill="#C9A227"/>
+    <!-- tagline -->
+    <text x="400" y="262" font-family="Arial,sans-serif" font-size="14" fill="#8A8A8A" text-anchor="middle" letter-spacing="4">ESTRATÉGIA · ESTRUTURA · CRESCIMENTO</text>
+    <!-- corner brackets -->
+    <path d="M60,60 L60,40 L80,40" stroke="#C9A227" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M740,60 L740,40 L720,40" stroke="#C9A227" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M60,440 L60,460 L80,460" stroke="#C9A227" stroke-width="1.5" fill="none" opacity="0.4"/>
+    <path d="M740,440 L740,460 L720,460" stroke="#C9A227" stroke-width="1.5" fill="none" opacity="0.4"/>
+  </svg>
+</template>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9A227;--gold-l:#DDB83A;--gold-d:#8B6914;
+  --gold-b:rgba(201,162,39,.18);--gold-bg:rgba(201,162,39,.10);
+  --bg:#0D0D0D;--bg2:#111;--bg3:#1A1A1A;
+  --fg:#E8E8E8;--fgm:#8A8A8A;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
+
+/* grain overlay */
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9990}
+
+/* ── SHIMMER ── */
+.shimmer{height:3px;background:linear-gradient(90deg,var(--bg),var(--gold),var(--gold-l),var(--gold),var(--bg));background-size:200% 100%;animation:shimmer 3s linear infinite;position:fixed;top:0;left:0;right:0;z-index:1001}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── NAV ── */
+nav{position:fixed;top:3px;left:0;right:0;z-index:1000;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+nav.solid{background:rgba(13,13,13,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--gold-b);padding:10px 48px}
+.nav-logo{height:50px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--fgm);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:#0D0D0D;font-weight:700;font-size:11px;letter-spacing:1px;padding:10px 22px;border-radius:4px;text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s}
+.nav-cta:hover{background:var(--gold-l);transform:translateY(-1px)}
+@media(max-width:768px){.nav-links{display:none}nav,nav.solid{padding:12px 20px}}
+
+/* ─────────────────────────────
+   HERO — marca em primeiro plano
+───────────────────────────────*/
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:100px 24px 120px}
+
+.hero-bg{position:absolute;inset:0;
+  background-image:url('assets/fundo_LP_desktop.png');
+  background-size:cover;background-position:center top;
+  transform:scale(1.06);transition:transform .1s linear;
+  will-change:transform}
+@media(max-width:768px){.hero-bg{background-image:url('assets/fundo_LP_mobile.png')}}
+.hero-veil{position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(13,13,13,.55) 0%,
+    rgba(13,13,13,.72) 40%,
+    rgba(13,13,13,.95) 80%,
+    rgba(13,13,13,1) 100%)}
+.hero-canvas{position:absolute;inset:0;z-index:1}
+
+.hero-inner{position:relative;z-index:3;max-width:960px}
+
+/* eyebrow */
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold-bg);border:1px solid var(--gold-b);
+  color:var(--gold);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  padding:8px 20px;border-radius:100px;margin-bottom:36px;
+  animation:fadeDown .8s ease both}
+.hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.5)}}
+
+/* BIG logo */
+.hero-logo-wrap{animation:fadeDown .8s .1s ease both}
+.hero-logo-wrap img{width:min(560px,88vw);height:auto;display:block;margin:0 auto;
+  filter:drop-shadow(0 0 60px rgba(201,162,39,.35)) drop-shadow(0 0 120px rgba(201,162,39,.15))}
+
+/* gold rule */
+.hero-rule{width:64px;height:2px;background:var(--gold);margin:28px auto;animation:fadeUp .8s .25s ease both}
+
+/* headline */
+.hero-headline{font-family:'Bebas Neue';font-size:clamp(28px,3.5vw,52px);
+  letter-spacing:6px;line-height:1.1;color:var(--fgm);
+  text-transform:uppercase;margin-bottom:24px;animation:fadeUp .8s .3s ease both}
+.hero-headline em{color:var(--gold);font-style:normal}
+
+/* sub */
+.hero-sub{font-size:clamp(15px,1.8vw,18px);color:var(--fgm);font-weight:300;
+  max-width:560px;margin:0 auto 40px;line-height:1.8;animation:fadeUp .8s .4s ease both}
+.hero-sub strong{color:var(--fg);font-weight:500}
+
+/* ctas */
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .5s ease both}
+
+/* mentor strip */
+.hero-mentors{position:relative;z-index:3;display:flex;gap:20px;justify-content:center;margin-top:72px;animation:fadeUp .8s .65s ease both}
+.mentor-strip-card{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:180px}
+.mentor-strip-photo{width:96px;height:96px;border-radius:50%;overflow:hidden;border:2px solid var(--gold);box-shadow:0 0 24px rgba(201,162,39,.25)}
+.mentor-strip-photo img{width:100%;height:100%;object-fit:cover;object-position:center 10%}
+.mentor-strip-name{font-family:'Bebas Neue';font-size:16px;letter-spacing:1px;color:var(--fg)}
+.mentor-strip-role{font-size:10px;color:var(--gold);letter-spacing:1px;text-align:center}
+.mentor-strip-divider{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold-b),transparent);align-self:center}
+
+/* scroll indicator */
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUpHint 1s .9s ease both;opacity:0}
+@keyframes fadeUpHint{from{opacity:0;transform:translateX(-50%) translateY(28px)}to{opacity:1;transform:translateX(-50%)}}
+.scroll-hint span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--fgm)}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+
+/* ── BTNs ── */
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#0D0D0D;font-weight:700;font-size:14px;letter-spacing:.6px;padding:16px 36px;border-radius:5px;text-decoration:none;transition:background .3s,transform .3s,box-shadow .3s;box-shadow:0 0 32px rgba(201,162,39,.3);animation:pulseGold 2.5s infinite}
+.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 48px rgba(201,162,39,.55);animation:none}
+@keyframes pulseGold{0%,100%{box-shadow:0 0 28px rgba(201,162,39,.28)}50%{box-shadow:0 0 52px rgba(201,162,39,.52)}}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--fg);font-size:14px;font-weight:500;padding:15px 28px;border-radius:5px;border:1px solid var(--gold-b);text-decoration:none;transition:background .2s,border-color .2s}
+.btn-outline:hover{background:var(--gold-bg);border-color:rgba(201,162,39,.5)}
+
+/* ─────────────────────────────
+   STATS — gold full-bleed strip
+───────────────────────────────*/
+.stats{background:var(--bg2);border-top:1px solid var(--gold-b);border-bottom:1px solid var(--gold-b);padding:48px}
+.stats-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:640px){.stats-inner{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center;padding:20px 8px;border-right:1px solid var(--gold-b)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue';font-size:clamp(40px,4.5vw,62px);color:var(--gold);letter-spacing:1px;line-height:1;display:block}
+.stat-l{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--fgm);margin-top:8px;display:block}
+
+/* ─────────────────────────────
+   SECTIONS base
+───────────────────────────────*/
+.section{padding:96px 48px}
+@media(max-width:768px){.section{padding:72px 24px}}
+.wrap{max-width:1060px;margin:0 auto}
+.wrap-sm{max-width:760px;margin:0 auto}
+.s-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.s-title{font-family:'Bebas Neue';font-size:clamp(32px,4.5vw,56px);letter-spacing:1.5px;line-height:1.06;margin-bottom:14px}
+.s-title em{color:var(--gold);font-style:normal}
+.s-sub{font-size:17px;color:var(--fgm);max-width:600px;line-height:1.75}
+.divider{width:48px;height:2px;background:var(--gold);margin:18px 0 40px}
+
+/* Reveal animations */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .75s ease,transform .75s ease}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .75s ease,transform .75s ease}
+.rv.on,.rv-l.on,.rv-r.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ─────────────────────────────
+   MÉTODO F.R.O.N.T
+   bg: tex-grid + radial glow
+───────────────────────────────*/
+#metodo{
+  background:var(--bg2);
+  background-image:linear-gradient(rgba(201,162,39,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,162,39,.04) 1px,transparent 1px);
+  background-size:64px 64px;
+  border-top:1px solid var(--gold-b);
+  position:relative;overflow:hidden}
+#metodo::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(201,162,39,.06),transparent 70%);
+  pointer-events:none}
+.front-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:48px}
+@media(max-width:900px){.front-grid{grid-template-columns:1fr 1fr;gap:3px}}
+@media(max-width:560px){.front-grid{grid-template-columns:1fr}}
+.front-card{background:rgba(13,13,13,.7);backdrop-filter:blur(4px);
+  border:1px solid var(--gold-b);padding:36px 26px 30px;
+  position:relative;overflow:hidden;cursor:default;
+  transition:border-color .35s,transform .35s,box-shadow .35s;
+  transform-style:preserve-3d}
+.front-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));
+  transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.front-card:hover{border-color:rgba(201,162,39,.55);transform:translateY(-8px);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 32px rgba(201,162,39,.1)}
+.front-card:hover::after{transform:scaleX(1)}
+.f-letter{font-family:'Bebas Neue';font-size:88px;line-height:.9;
+  color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.22);
+  margin-bottom:16px;transition:color .35s,-webkit-text-stroke .35s}
+.front-card:hover .f-letter{color:var(--gold);-webkit-text-stroke:1px var(--gold)}
+.f-word{font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;color:var(--gold);margin-bottom:12px}
+.f-desc{font-size:13px;color:var(--fgm);line-height:1.7}
+
+/* ─────────────────────────────
+   JORNADA
+   bg: pure dark + radial corner glow
+───────────────────────────────*/
+#jornada{background:var(--bg);position:relative;overflow:hidden}
+#jornada::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(201,162,39,.06),transparent 70%);pointer-events:none}
+.journey-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:48px;align-items:stretch}
+@media(max-width:900px){.journey-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.journey-grid{grid-template-columns:1fr}}
+.j-card{background:var(--bg3);border:1px solid var(--gold-b);padding:32px 26px 28px;
+  display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;
+  transition:border-color .35s,transform .4s,box-shadow .4s;
+  transform-style:preserve-3d;perspective:900px;cursor:default}
+.j-card:hover{transform:translateY(-8px) rotateX(3deg);border-color:rgba(201,162,39,.5);
+  box-shadow:0 24px 56px rgba(0,0,0,.55),0 0 36px rgba(201,162,39,.12)}
+.j-bg-num{position:absolute;bottom:-10px;right:10px;font-family:'Bebas Neue';font-size:120px;
+  color:rgba(201,162,39,.04);line-height:1;pointer-events:none;transition:color .35s}
+.j-card:hover .j-bg-num{color:rgba(201,162,39,.08)}
+.j-level{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--fgm)}
+.j-num{font-family:'Bebas Neue';font-size:44px;color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.2);line-height:1;transition:color .3s,-webkit-text-stroke .3s}
+.j-card:hover .j-num{color:var(--gold-d);-webkit-text-stroke:1px var(--gold)}
+.j-title{font-family:'Bebas Neue';font-size:24px;color:var(--fg);letter-spacing:1px;line-height:1.1}
+.j-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:100px;border:1px solid var(--gold-b);background:var(--gold-bg);color:var(--gold);width:fit-content}
+.j-desc{font-size:13px;color:var(--fgm);line-height:1.7;flex:1}
+.j-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.j-list li{font-size:12px;color:var(--fgm);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.j-list li::before{content:'—';color:var(--gold);flex-shrink:0;font-size:10px;margin-top:2px}
+
+/* ─────────────────────────────
+   CLUBE
+   bg: bg2 + diagonal gold gradient
+───────────────────────────────*/
+#clube{background:var(--bg2);border-top:1px solid var(--gold-b);position:relative;overflow:hidden}
+#clube::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,162,39,.06) 0%,transparent 50%);pointer-events:none}
+.clube-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media(max-width:768px){.clube-grid{grid-template-columns:1fr;gap:36px}}
+.clube-card{background:linear-gradient(160deg,rgba(201,162,39,.1),var(--bg3));
+  border:1px solid var(--gold);border-radius:16px;padding:40px 36px;
+  box-shadow:0 0 60px rgba(201,162,39,.12);text-align:center}
+.clube-star{width:120px;height:120px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;background:transparent;border-radius:0;overflow:visible;padding:0}
+.clube-star svg{width:72px;height:72px;stroke:var(--gold);fill:none;stroke-width:1}
+.clube-name{font-family:'Bebas Neue';font-size:48px;color:var(--gold);letter-spacing:4px;margin-bottom:4px}
+.clube-sub{font-size:12px;color:var(--fgm);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px}
+.clube-rule{width:100%;height:1px;background:var(--gold-b);margin-bottom:20px}
+.clube-rows{display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px}
+.clube-row{display:flex;justify-content:space-between;font-size:13px}
+.clube-row .lbl{color:var(--fgm)}
+.clube-row .val{color:var(--gold);font-weight:500}
+.clube-note{font-size:12px;color:var(--fgm);background:rgba(201,162,39,.06);border:1px solid var(--gold-b);border-radius:8px;padding:14px;line-height:1.7;text-align:center}
+.clube-note strong{color:var(--gold)}
+.clube-benefits{list-style:none;display:flex;flex-direction:column;gap:12px}
+.clube-benefits li{display:flex;gap:12px;font-size:15px;color:var(--fgm);align-items:flex-start;line-height:1.55}
+.check{width:20px;height:20px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-b);color:var(--gold);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* ─────────────────────────────
+   MENTORES
+   bg: dark com pattern de pontos
+───────────────────────────────*/
+#mentores{
+  background:var(--bg);
+  background-image:radial-gradient(circle,rgba(201,162,39,.045) 1px,transparent 1px);
+  background-size:32px 32px;
+  border-top:1px solid var(--gold-b);position:relative}
+#mentores::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,var(--bg) 0%,transparent 15%,transparent 85%,var(--bg) 100%);
+  pointer-events:none}
+.mentores-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+@media(max-width:768px){.mentores-grid{grid-template-columns:1fr}}
+.mc{background:var(--bg3);border:1px solid var(--gold-b);border-radius:12px;overflow:hidden;
+  transition:transform .4s,border-color .3s,box-shadow .4s}
+.mc:hover{transform:translateY(-6px);border-color:rgba(201,162,39,.45);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 32px rgba(201,162,39,.08)}
+.mc-photo{height:400px;overflow:hidden;position:relative}
+.mc-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.mc:hover .mc-photo img{transform:scale(1.04)}
+.mc-photo-grad{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,var(--bg3),transparent)}
+.mc-pill{position:absolute;top:16px;right:16px;background:rgba(13,13,13,.82);border:1px solid var(--gold-b);color:var(--gold);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:100px;backdrop-filter:blur(8px)}
+.mc-body{padding:26px 30px 32px}
+.mc-body h3{font-family:'Bebas Neue';font-size:30px;letter-spacing:1px;margin-bottom:4px}
+.mc-role{display:block;font-size:12px;color:var(--gold);margin-bottom:14px;line-height:1.5;letter-spacing:.3px}
+.mc-body p{font-size:14px;color:var(--fgm);line-height:1.75;margin-bottom:10px}
+.mc-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mpill{background:var(--gold-bg);border:1px solid var(--gold-b);color:var(--gold);font-size:11px;padding:5px 12px;border-radius:100px;white-space:nowrap}
+
+/* ─────────────────────────────
+   EVENTOS
+   bg: bg2 + militar texture overlay
+───────────────────────────────*/
+#eventos{background:var(--bg2);border-top:1px solid var(--gold-b);position:relative;overflow:hidden}
+#eventos::before{content:'';position:absolute;inset:0;
+  background:url('assets/fundomilitar.png') center/cover;opacity:.04;pointer-events:none}
+.ticker-wrap{position:relative;overflow:hidden;margin:40px -48px 0}
+@media(max-width:768px){.ticker-wrap{margin:32px -24px 0}}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.ticker-wrap::before{left:0;background:linear-gradient(to right,var(--bg2),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(to left,var(--bg2),transparent)}
+.ticker-inner{display:flex;gap:12px;padding:0 48px;width:max-content;animation:tickerMove 28s linear infinite}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-wrap:hover .ticker-inner{animation-play-state:paused}
+.ticker-inner img{height:260px;width:auto;border-radius:8px;object-fit:cover;filter:grayscale(20%) brightness(.82);transition:filter .4s,transform .4s;flex-shrink:0}
+.ticker-inner img:hover{filter:grayscale(0%) brightness(1);transform:scale(1.04)}
+@media(max-width:768px){.ticker-inner img{height:190px}}
+.evento-link{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-decoration:none;border:1px solid var(--gold-b);padding:8px 18px;border-radius:100px;transition:background .2s}
+.evento-link:hover{background:var(--gold-bg)}
+
+/* ─────────────────────────────
+   QG — placeholder elegante
+───────────────────────────────*/
+#qg{background:var(--bg);border-top:1px solid var(--gold-b)}
+.qg-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media(max-width:768px){.qg-grid{grid-template-columns:1fr;gap:32px}}
+.qg-placeholder{height:340px;border:1px dashed rgba(201,162,39,.3);border-radius:12px;background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;position:relative;overflow:hidden}
+.qg-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,162,39,.04),transparent)}
+.qg-ph-icon svg{width:52px;height:52px;stroke:rgba(201,162,39,.35);fill:none;stroke-width:1.2}
+.qg-ph-label{font-family:'Bebas Neue';font-size:18px;letter-spacing:4px;color:rgba(201,162,39,.35)}
+.qg-ph-sub{font-size:11px;color:var(--fgm);letter-spacing:1px;opacity:.6}
+.qg-em-obra{display:inline-flex;align-items:center;gap:6px;background:rgba(201,162,39,.08);border:1px dashed rgba(201,162,39,.25);color:rgba(201,162,39,.6);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:100px}
+.qg-feats{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.qg-feat{display:flex;gap:16px;align-items:flex-start}
+.qg-feat-icon{width:40px;height:40px;border:1px solid var(--gold-b);border-radius:8px;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qg-feat-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.qg-feat h5{font-family:'Bebas Neue';font-size:16px;letter-spacing:.5px;margin-bottom:4px}
+.qg-feat p{font-size:13px;color:var(--fgm);line-height:1.6}
+
+/* ─────────────────────────────
+   CTA FINAL — gold glow radial
+───────────────────────────────*/
+#cta-final{background:var(--bg2);border-top:1px solid var(--gold-b);text-align:center;padding:116px 48px;position:relative;overflow:hidden}
+#cta-final::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(201,162,39,.1),transparent 70%);pointer-events:none}
+#cta-final::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;
+  background:radial-gradient(ellipse 60% 100% at 50% 100%,rgba(201,162,39,.06),transparent);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:800px;margin:0 auto}
+.cta-inner .s-title{font-size:clamp(34px,5vw,68px)}
+.cta-inner .s-title em{color:var(--gold)}
+.cta-body{font-size:17px;color:var(--fgm);line-height:1.85;max-width:560px;margin:0 auto 44px}
+.cta-body strong{color:var(--fg)}
+.cta-assin{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:64px}
+.cta-assin span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--fgm);opacity:.55}
+.cta-assin img{height:52px;opacity:.55}
+
+/* ── FOOTER ── */
+footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:44px 48px;text-align:center}
+.footer-logo{height:60px;margin:0 auto 16px;display:block;opacity:.5}
+.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.footer-links a{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--fgm);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:12px;color:var(--fgm)}
+
+/* ── QUIZ TRILHA ── */
+#trilha{background:var(--bg2);border-top:1px solid var(--gold-b);position:relative;overflow:hidden}
+#trilha::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(201,162,39,.07),transparent 70%);pointer-events:none}
+.trilha-wrap{max-width:680px;margin:0 auto;text-align:center}
+.trilha-steps{position:relative;min-height:260px}
+.trilha-step{display:none;animation:fadeUp .4s ease both}
+.trilha-step.active{display:block}
+.trilha-q{font-family:'Bebas Neue';font-size:clamp(22px,3vw,34px);letter-spacing:1px;color:var(--fg);margin-bottom:28px;line-height:1.15}
+.trilha-opts{display:flex;flex-direction:column;gap:10px}
+.trilha-opt{background:var(--bg3);border:1px solid var(--gold-b);border-radius:8px;padding:16px 22px;font-size:14px;color:var(--fg);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;transition:border-color .2s,background .2s,transform .2s}
+.trilha-opt:hover{border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.06);transform:translateX(4px)}
+.trilha-opt-icon{width:32px;height:32px;border-radius:6px;background:var(--gold-bg);border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trilha-opt-icon svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.trilha-opt strong{display:block;font-weight:600;margin-bottom:2px}
+.trilha-opt span{font-size:12px;color:var(--fgm)}
+.trilha-result{text-align:center;padding:8px 0}
+.trilha-result-badge{display:inline-block;background:var(--gold-bg);border:1px solid var(--gold-b);color:var(--gold);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:6px 18px;border-radius:100px;margin-bottom:16px}
+.trilha-result h3{font-family:'Bebas Neue';font-size:clamp(28px,4vw,44px);letter-spacing:1.5px;color:var(--fg);margin-bottom:10px}
+.trilha-result h3 em{color:var(--gold);font-style:normal}
+.trilha-result p{font-size:15px;color:var(--fgm);line-height:1.75;max-width:480px;margin:0 auto 24px}
+.trilha-result-cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#0D0D0D;font-weight:700;font-size:13px;letter-spacing:.6px;padding:13px 28px;border-radius:5px;text-decoration:none;transition:background .2s}
+.trilha-result-cta:hover{background:var(--gold-l)}
+.trilha-back{background:none;border:none;color:var(--fgm);font-size:12px;letter-spacing:1px;cursor:pointer;margin-top:18px;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.trilha-back:hover{color:var(--gold)}
+.trilha-progress{display:flex;gap:6px;justify-content:center;margin-bottom:28px}
+.trilha-dot{width:6px;height:6px;border-radius:50%;background:var(--bg3);border:1px solid var(--gold-b);transition:background .3s}
+.trilha-dot.done{background:var(--gold)}
+/* ── PRODUTO CARDS (FBS, Squad, Legacy) ── */
+.prod-section{border-top:1px solid var(--gold-b)}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:48px}
+@media(max-width:768px){.prod-grid{grid-template-columns:1fr;gap:28px}}
+.prod-illus{border-radius:12px;overflow:hidden;background:transparent;border:1px solid var(--gold-b);aspect-ratio:1;display:flex;align-items:center;justify-content:center;max-width:320px}
+.prod-illus img{width:90%;height:90%;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)}
+.prod-body{display:flex;flex-direction:column;gap:14px}
+.prod-tag{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+.prod-name{font-family:'Bebas Neue';font-size:clamp(28px,4vw,44px);letter-spacing:1.5px;line-height:1.05}
+.prod-tagline{font-size:15px;color:var(--fgm);font-style:italic}
+.prod-desc{font-size:15px;color:var(--fgm);line-height:1.8}
+.prod-modules{list-style:none;display:flex;flex-direction:column;gap:8px;margin:4px 0}
+.prod-modules li{display:flex;gap:10px;font-size:13px;color:var(--fgm);align-items:flex-start;line-height:1.6}
+.prod-modules li::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:7px}
+.prod-modules li strong{color:var(--fg);font-weight:700;display:block;margin-bottom:2px}
+.prod-detail{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.prod-chip{background:var(--gold-bg);border:1px solid var(--gold-b);color:var(--gold);font-size:11px;padding:4px 12px;border-radius:100px;white-space:nowrap}
+/* ── DEPOIMENTO ── */
+#depoimento{background:var(--bg);border-top:1px solid var(--gold-b);position:relative;overflow:hidden}
+#depoimento::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(201,162,39,.07),transparent 65%);
+  pointer-events:none}
+.depo-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:48px}
+@media(max-width:768px){.depo-grid{grid-template-columns:1fr;gap:36px}}
+.depo-copy{display:flex;flex-direction:column;gap:20px}
+.depo-pull{font-family:'Bebas Neue';font-size:clamp(22px,3vw,34px);letter-spacing:1px;line-height:1.25;color:var(--fg)}
+.depo-pull em{color:var(--gold);font-style:normal}
+.depo-body{font-size:15px;color:var(--fgm);line-height:1.85}
+.depo-attr{display:flex;align-items:center;gap:14px;padding-top:16px;border-top:1px solid var(--gold-b)}
+.depo-avatar{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--gold-b);overflow:hidden;flex-shrink:0}
+.depo-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.depo-info{display:flex;flex-direction:column;gap:3px}
+.depo-info strong{font-size:15px;color:var(--fg);font-weight:600}
+.depo-info span{font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase}
+.depo-video-outer{display:flex;justify-content:center}
+.depo-video-wrap{position:relative;border-radius:16px;overflow:hidden;
+  border:1px solid var(--gold-b);
+  box-shadow:0 0 80px rgba(201,162,39,.18),0 32px 80px rgba(0,0,0,.7);
+  background:#000;max-width:300px;width:100%}
+@media(max-width:768px){.depo-video-wrap{max-width:260px}}
+.depo-video-wrap video{width:100%;display:block;aspect-ratio:9/16;object-fit:cover}
+.depo-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.32);transition:opacity .3s,visibility .3s}
+.depo-overlay.hidden{opacity:0;visibility:hidden}
+.depo-play{width:68px;height:68px;border-radius:50%;
+  background:rgba(201,162,39,.9);border:2px solid var(--gold);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,background .2s;box-shadow:0 0 32px rgba(201,162,39,.45)}
+.depo-play:hover{transform:scale(1.1);background:var(--gold)}
+.depo-play svg{width:26px;height:26px;fill:#0D0D0D;margin-left:5px}
+.depo-sound{position:absolute;bottom:12px;right:12px;
+  background:rgba(13,13,13,.82);border:1px solid var(--gold-b);color:var(--gold);
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:5px 11px;border-radius:100px;cursor:pointer;backdrop-filter:blur(8px);
+  transition:background .2s;display:none}
+.depo-sound.visible{display:block}
+.depo-sound:hover{background:var(--gold-bg)}
+/* ── QUIZ HINT ── */
+.trilha-hint{display:flex;align-items:center;gap:8px;justify-content:center;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;animation:hintBounce 1.5s ease-in-out infinite}
+.trilha-hint svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2.5}
+@keyframes hintBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+/* ── WA FAB ── */
+.wa-fab{position:fixed;bottom:24px;right:22px;z-index:997;display:flex;align-items:center;gap:9px;background:#25D366;color:#fff;font-size:13px;font-weight:600;padding:13px 18px;border-radius:100px;text-decoration:none;box-shadow:0 4px 22px rgba(37,211,102,.28);transition:transform .3s,box-shadow .3s;animation:fadeUp 1s 1.2s ease both;opacity:0}
+.wa-fab:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(37,211,102,.45)}
+.wa-fab svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+@media(max-width:480px){.wa-fab span{display:none}}
+</style>
+</head>
+<body>
+<div class="shimmer"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <img src="assets/logo-fe-no-front-transparente.png" alt="Fé no Front" class="nav-logo" style="width:60px;height:60px;object-fit:contain">
+  <div class="nav-links">
+    <a href="#metodo">Método</a>
+    <a href="#jornada">Programas</a>
+    <a href="#mentores">Mentores</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#qg">QG</a>
+    <a href="#cta-final" class="nav-cta" style="color: rgb(0, 4, 11)">FALAR COM A EQUIPE</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════
+     HERO — marca em primeiro plano
+════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-veil"></div>
+  <canvas class="hero-canvas" id="hero-canvas"></canvas>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Movimento de Estratégia Empresarial</div>
+
+    <div class="hero-logo-wrap">
+      <img src="assets/logo-fe-no-front-transparente.png" alt="Fé no Front">
+    </div>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-headline">Estratégia &nbsp;·&nbsp; Estrutura &nbsp;·&nbsp; <em>Crescimento</em></p>
+
+    <p class="hero-sub">
+      Para empresários que trabalham muito e querem crescer com clareza, consistência e direção real.<br>
+      <strong>Não inspiração genérica. Diagnóstico + rota.</strong>
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#jornada" class="btn-gold">CONHECER OS PROGRAMAS</a>
+      <a href="#metodo" class="btn-outline">VER O MÉTODO F.R.O.N.T</a>
+    </div>
+
+    <!-- mentores como crédito, mesmo peso -->
+    <div class="hero-mentors">
+      <div class="mentor-strip-card">
+        <div class="mentor-strip-photo">
+          <img src="assets/Braian_oficial.png" alt="Braian Corrêa">
+        </div>
+        <div class="mentor-strip-name">Braian Corrêa</div>
+        <div class="mentor-strip-role">Co-fundador · CEO Grupo Brava</div>
+      </div>
+      <div class="mentor-strip-divider"></div>
+      <div class="mentor-strip-card">
+        <div class="mentor-strip-photo">
+          <img src="assets/Nando.png" alt="Nando Borba" style="object-position:center 10%">
+        </div>
+        <div class="mentor-strip-name">Nando Borba</div>
+        <div class="mentor-strip-role">Co-fundador · Fundador Elite Mídias</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Rolar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats rv">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-n" data-target="10" data-prefix="R$" data-suffix="M+">R$0</span><span class="stat-l">Vendas B2B</span></div>
+    <div class="stat"><span class="stat-n" data-target="6" data-prefix="R$" data-suffix="M+">R$0</span><span class="stat-l">Digital</span></div>
+    <div class="stat"><span class="stat-n" data-target="300" data-suffix="+">0</span><span class="stat-l">Empresários</span></div>
+    <div class="stat"><span class="stat-n" data-target="6" data-prefix="R$" data-suffix="M">R$0</span><span class="stat-l">Grupo Brava</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     MÉTODO F.R.O.N.T
+════════════════════════════ -->
+<section class="section" id="metodo">
+  <div class="wrap">
+    <div class="rv">
+      <span class="s-tag">O Método</span>
+      <h2 class="s-title">O método <em>F.R.O.N.T</em></h2>
+      <div class="divider"></div>
+      <p class="s-sub">Cinco coordenadas que separam quem trabalha muito de quem cresce com intenção. Cada pilar resolve um ponto cego específico do empresário que opera sem direção estratégica.</p>
+    </div>
+    <div class="front-grid">
+      <div class="front-card rv d1">
+        <div class="f-letter">F</div>
+        <div class="f-word">FOCO</div>
+        <p class="f-desc">Clareza de propósito antes de qualquer movimento. Saber exatamente onde você está e para onde quer ir — em números, prazos e estrutura, não em sonhos.</p>
+      </div>
+      <div class="front-card rv d2">
+        <div class="f-letter">R</div>
+        <div class="f-word">ROTA</div>
+        <p class="f-desc">O mapa financeiro e operacional do crescimento. Quanto investir, onde alocar, qual margem sustentar. A conta, não o chute — decisão com critério.</p>
+      </div>
+      <div class="front-card rv d3">
+        <div class="f-letter">O</div>
+        <div class="f-word">OFERTA</div>
+        <p class="f-desc">O que você vende de verdade e como o mercado te enxerga. A distância entre esses dois pontos é onde você está perdendo dinheiro todos os dias.</p>
+      </div>
+      <div class="front-card rv d4">
+        <div class="f-letter">N</div>
+        <div class="f-word">NEGÓCIO</div>
+        <p class="f-desc">Estrutura e processos que sustentam o crescimento sem você operar tudo. Nenhum negócio escala quando você é o motor, o combustível e o mecânico.</p>
+      </div>
+      <div class="front-card rv" style="transition-delay:.5s">
+        <div class="f-letter">T</div>
+        <div class="f-word">TRAÇÃO</div>
+        <p class="f-desc">Canais, investimento e aquisição de cliente com critério. Cada canal tem uma função diferente. Misturar é gastar dinheiro para gerar curtida, não venda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     DEPOIMENTO — EUDES
+════════════════════════════ -->
+<section class="section" id="depoimento">
+  <div class="wrap">
+    <div class="rv" style="text-align:center">
+      <span class="s-tag">Prova Real</span>
+      <h2 class="s-title">O que muda quando você <em>para de improvisar</em></h2>
+      <div class="divider" style="margin:18px auto 0"></div>
+    </div>
+    <div class="depo-grid">
+      <div class="depo-copy rv-l">
+        <p class="depo-pull">
+          "Eu sabia que tinha potencial.<br>
+          Faltava <em>saber para onde ir.</em>"
+        </p>
+        <p class="depo-body">
+          Ouça o Eudes — ele veio sem clareza de estrutura e saiu com plano, modelo e os próximos passos na mão. Sem palestra, sem frase de efeito. Diagnóstico real, rota real, execução real.
+        </p>
+        <div class="depo-attr">
+          <div class="depo-avatar">
+            <img src="assets/Eudes.png" alt="Eudes">
+          </div>
+          <div class="depo-info">
+            <strong>Eudes</strong>
+            <span>Participante · Front Legacy</span>
+          </div>
+        </div>
+      </div>
+      <div class="depo-video-outer rv-r">
+        <div class="depo-video-wrap">
+          <video id="eudes-video" src="assets/Depoimento-Eudes.mp4"
+                 muted playsinline preload="metadata">
+          </video>
+          <div class="depo-overlay" id="eudes-overlay">
+            <button class="depo-play" onclick="eudesToggle()">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+          <button class="depo-sound" id="eudes-sound" onclick="eudesSound()">🔇 SOM</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     TRILHA INTERATIVA
+════════════════════════════ -->
+<section class="section" id="trilha">
+  <div class="wrap">
+    <div class="rv" style="text-align:center">
+      <span class="s-tag">Qual produto é pra você?</span>
+      <h2 class="s-title">Encontre seu <em>Pelotão</em></h2>
+      <div class="divider" style="margin:18px auto 36px"></div>
+    </div>
+    <div class="trilha-wrap rv">
+      <div class="trilha-progress" id="trilha-progress">
+        <div class="trilha-dot" id="td0"></div>
+        <div class="trilha-dot" id="td1"></div>
+        <div class="trilha-dot" id="td2"></div>
+      </div>
+      <div class="trilha-steps" id="trilha-steps">
+        <!-- Step 0 -->
+        <div class="trilha-step active" id="ts0">
+          <div class="trilha-q">Qual melhor descreve onde você está hoje?</div>
+          <div class="trilha-hint">
+            <svg viewBox="0 0 24 24"><polyline points="6,9 12,15 18,9"/></svg>
+            Toque em uma opção
+          </div>
+          <div class="trilha-opts">
+            <button class="trilha-opt" onclick="trilhaNext(0,0)">
+              <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg></div>
+              <div><strong>Estou começando a entender que preciso de estrutura</strong><span>Tenho um negócio, mas ainda opero no improviso</span></div>
+            </button>
+            <button class="trilha-opt" onclick="trilhaNext(0,1)">
+              <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg></div>
+              <div><strong>Já tenho clientes e faturamento, mas falta método</strong><span>Cresci no improviso e agora preciso organizar</span></div>
+            </button>
+            <button class="trilha-opt" onclick="trilhaNext(0,2)">
+              <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+              <div><strong>Tenho um negócio estruturado e quero escalar</strong><span>Preciso de pares e ambiente de alto nível</span></div>
+            </button>
+          </div>
+        </div>
+        <!-- Step 1a (para respostas 0 e 1) -->
+        <div class="trilha-step" id="ts1">
+          <div class="trilha-q">O que você mais precisa agora?</div>
+          <div class="trilha-opts" id="ts1-opts"></div>
+          <button class="trilha-back" onclick="trilhaBack(1)">← Voltar</button>
+        </div>
+        <!-- Step 1b (para resposta 2) -->
+        <div class="trilha-step" id="ts1b">
+          <div class="trilha-q">Como você prefere evoluir?</div>
+          <div class="trilha-opts">
+            <button class="trilha-opt" onclick="trilhaResult('squad')">
+              <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+              <div><strong>Em grupo — com pares do mesmo nível</strong><span>Prefiro evoluir junto, compartilhar e aprender com outros</span></div>
+            </button>
+            <button class="trilha-opt" onclick="trilhaResult('legacy')">
+              <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+              <div><strong>Individual — com atenção dedicada aos meus desafios</strong><span>Quero um mentor focado 100% no meu negócio</span></div>
+            </button>
+          </div>
+          <button class="trilha-back" onclick="trilhaBack('1b')">← Voltar</button>
+        </div>
+        <!-- Resultado -->
+        <div class="trilha-step" id="ts-result">
+          <div class="trilha-result" id="trilha-result-content"></div>
+          <button class="trilha-back" onclick="trilhaReset()">↺ Recomeçar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     JORNADA — 4 PRODUTOS
+════════════════════════════ -->
+<section class="section" id="jornada">
+  <div class="wrap">
+    <div class="rv">
+      <span class="s-tag">Programas</span>
+      <h2 class="s-title">A esteira <em>Fé no Front</em></h2>
+      <div class="divider"></div>
+      <p class="s-sub">Quatro produtos desenhados para onde você está agora — da comunidade de negócios à mentoria individual de alto nível.</p>
+    </div>
+    <div class="journey-grid">
+
+      <!-- 01 FNF CLUB - with illus -->
+      <div class="j-card rv d1">
+        <div class="j-bg-num">01</div>
+        <div class="j-level">Nível 01</div>
+        <div class="j-num">01</div>
+        <div style="width:64px;height:64px;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:visible"><img src="assets/prog-fnf-club.png" style="width:100%;height:100%;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)"></div>
+        <div class="j-title">FNF Club</div>
+        <div class="j-tag">COMUNIDADE</div>
+        <p class="j-desc">"Quero pertencer a um ecossistema de empreendedores que fazem negócios entre si." O valor não está no que os fundadores entregam — está no que os membros geram uns para os outros.</p>
+        <ul class="j-list">
+          <li>Comunidade de negócios curada</li>
+          <li>Encontros e networking ativo</li>
+          <li>Acesso ao QG Fé no Front</li>
+          <li>Assinatura mensal</li>
+        </ul>
+      </div>
+
+      <!-- 02 FRONT BUSINESS SCHOOL -->
+      <div class="j-card rv d2">
+        <div class="j-bg-num">02</div>
+        <div class="j-level">Nível 02</div>
+        <div class="j-num">02</div>
+        <div style="width:64px;height:64px;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:visible"><img src="assets/prog-fbs.png" style="width:100%;height:100%;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)"></div>
+        <div class="j-title">Front Business School</div>
+        <div class="j-tag">PROGRAMA · 4 MESES</div>
+        <p class="j-desc">Currículo fixo em pequenos grupos com acompanhamento próximo. Entra no improviso, sai com negócio estruturado, plano pronto e estratégia validada.</p>
+        <ul class="j-list">
+          <li>Mód. 1 — Estrutura de negócio</li>
+          <li>Mód. 2 — Produto e precificação</li>
+          <li>Mód. 3 — Marketing e vendas</li>
+          <li>Mód. 4 — Finanças e indicadores</li>
+          <li>Entrega: Plano + BMC + validação</li>
+        </ul>
+      </div>
+
+      <!-- 03 FRONT SQUAD -->
+      <div class="j-card rv d3">
+        <div class="j-bg-num">03</div>
+        <div class="j-level">Nível 03</div>
+        <div class="j-num">03</div>
+        <div style="width:64px;height:64px;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:visible"><img src="assets/prog-squad.png" style="width:100%;height:100%;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)"></div>
+        <div class="j-title">Front Squad</div>
+        <div class="j-tag">MENTORIA EM GRUPO</div>
+        <p class="j-desc">Mentoria em grupo com formato híbrido. Para quem já tem estrutura e quer evoluir junto com pares de nível equivalente, com ritmo e acompanhamento constante.</p>
+        <ul class="j-list">
+          <li>Encontro presencial mensal</li>
+          <li>Encontro online quinzenal</li>
+          <li>Temas: delegação, time, expansão</li>
+        </ul>
+      </div>
+
+      <!-- 04 FRONT LEGACY -->
+      <div class="j-card rv d4" style="border-color:rgba(201,162,39,.3)">
+        <div class="j-bg-num">04</div>
+        <div class="j-level">Nível 04</div>
+        <div class="j-num">04</div>
+        <div style="width:64px;height:64px;border-radius:0;background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:visible"><img src="assets/prog-legacy.png" style="width:100%;height:100%;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)"></div>
+        <div class="j-title">Front Legacy</div>
+        <div class="j-tag">MENTORIA INDIVIDUAL</div>
+        <p class="j-desc">O nível mais alto do ecossistema. Sessões mensais individuais de 2 horas com acompanhamento anual — empresa, vida e legado como dimensões integradas.</p>
+        <ul class="j-list">
+          <li>Sessões mensais individuais (2h)</li>
+          <li>Acompanhamento anual contínuo</li>
+          <li>Opcional: Social Media, Site, Tráfego, IA e CRM</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FNF CLUB — COMUNIDADE
+════════════════════════════ -->
+<section class="section" id="clube">
+  <div class="wrap">
+    <div class="clube-grid">
+      <div class="rv-l">
+        <span class="s-tag">Nível 01 · Comunidade</span>
+        <h2 class="s-title">FNF <em>Club</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:17px;color:var(--fgm);line-height:1.8;margin-bottom:12px;">Uma comunidade de negócios — não de cursos.</p>
+        <p style="font-size:15px;color:var(--fgm);line-height:1.8;margin-bottom:32px;">O valor principal não é o que os fundadores entregam. É o que os <strong style="color:var(--fg)">membros geram entre si</strong> — negócios fechados, parcerias formadas, oportunidades que só existem dentro do ecossistema.</p>
+        <ul class="clube-benefits">
+          <li><div class="check">✓</div><span>Comunidade de negócios com curadoria de membros</span></li>
+          <li><div class="check">✓</div><span>Encontros presenciais e ambiente de conexão real</span></li>
+          <li><div class="check">✓</div><span>Acesso ao QG Fé no Front</span></li>
+          <li><div class="check">✓</div><span>Fundadores como curadores — não como professores</span></li>
+          <li><div class="check">✓</div><span>Porta de entrada para a Front Business School</span></li>
+        </ul>
+        <div style="margin-top:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <a href="#cta-final" class="btn-gold" style="animation:none">QUERO ENTRAR NO CLUB</a>
+          <span style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--fgm)">Vagas abertas · Assinatura mensal</span>
+        </div>
+      </div>
+      <div class="rv-r">
+        <div class="clube-card">
+          <div class="clube-star">
+            <img src="assets/prog-fnf-club.png" alt="FNF Club" style="width:135px;height:135px;object-fit:contain;filter:sepia(1) saturate(2.5) hue-rotate(5deg) brightness(1.05)">
+          </div>
+          <div class="clube-name">FNF CLUB</div>
+          <div class="clube-sub">Ecossistema de empreendedores</div>
+          <div class="clube-rule"></div>
+          <div class="clube-rows">
+            <div class="clube-row"><span class="lbl">Formato</span><span class="val">Comunidade · Assinatura mensal</span></div>
+            <div class="clube-row"><span class="lbl">Acesso ao QG</span><span class="val">✓ Incluso</span></div>
+            <div class="clube-row"><span class="lbl">Encontros</span><span class="val">✓ Presenciais + online</span></div>
+            <div class="clube-row"><span class="lbl">Curadoria</span><span class="val">✓ Membros selecionados</span></div>
+            <div class="clube-row"><span class="lbl">Papel dos fundadores</span><span class="val">Curadores do ecossistema</span></div>
+          </div>
+          <div class="clube-note">
+            Preço e detalhes em breve.<br>
+            <strong>Entre na lista de espera.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FRONT BUSINESS SCHOOL
+════════════════════════════ -->
+<section class="section prod-section" id="fbs" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="prod-grid">
+      <div class="rv-l">
+        <div class="prod-illus">
+          <img src="assets/prog-fbs.png" alt="Front Business School">
+        </div>
+      </div>
+      <div class="prod-body rv-r">
+        <div class="prod-tag">Nível 02 · Programa</div>
+        <h2 class="prod-name">Front Business<br><em style="color:var(--gold)">School</em></h2>
+        <p class="prod-tagline">Entra no improviso. Sai com negócio estruturado.</p>
+        <p class="prod-desc">Currículo fixo em pequenos grupos com acompanhamento próximo dos fundadores. 4 meses, 4 módulos, 1 entrega: seu negócio com plano, modelo e estratégia validados.</p>
+        <ul class="prod-modules">
+          <li><strong>Módulo 1 — Estrutura:</strong> Plano de Negócio, Modelo de Negócio, Planejamento Estratégico</li>
+          <li><strong>Módulo 2 — Produto:</strong> Criação, Precificação, Esteira de Produto</li>
+          <li><strong>Módulo 3 — Escala:</strong> Marketing, Canais de Aquisição, Vendas</li>
+          <li><strong>Módulo 4 — Finanças:</strong> DRE, Fluxo de caixa, Indicadores, Capital de giro</li>
+        </ul>
+        <div class="prod-detail">
+          <span class="prod-chip">4 meses</span>
+          <span class="prod-chip">Aulas ao vivo 2x/semana</span>
+          <span class="prod-chip">Pequenos grupos</span>
+          <span class="prod-chip">Plano de Negócio + BMC</span>
+          <span class="prod-chip">Validação com os fundadores</span>
+        </div>
+        <div style="margin-top:24px">
+          <a href="#cta-final" class="btn-gold" style="animation:none">QUERO SABER MAIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FRONT SQUAD
+════════════════════════════ -->
+<section class="section prod-section" id="squad" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="prod-grid" style="direction:rtl">
+      <div class="rv-r" style="direction:ltr">
+        <div class="prod-illus">
+          <img src="assets/prog-squad.png" alt="Front Squad">
+        </div>
+      </div>
+      <div class="prod-body rv-l" style="direction:ltr">
+        <div class="prod-tag">Nível 03 · Mentoria em Grupo</div>
+        <h2 class="prod-name">Front<br><em style="color:var(--gold)">Squad</em></h2>
+        <p class="prod-tagline">Evolua junto com pares do mesmo nível.</p>
+        <p class="prod-desc">Mentoria em grupo com formato híbrido — encontro presencial mensal e encontro online quinzenal. Para quem já tem estrutura e quer avançar com ritmo, responsabilidade mútua e perspectivas reais de outros empresários.</p>
+        <ul class="prod-modules">
+          <li>Encontro presencial mensal — meio período, tema definido</li>
+          <li>Encontro online quinzenal — acompanhamento e indicadores</li>
+          <li>Temas: delegação, gestão de time, expansão, escala</li>
+        </ul>
+        <div class="prod-detail">
+          <span class="prod-chip">Híbrido</span>
+          <span class="prod-chip">Presencial mensal</span>
+          <span class="prod-chip">Online quinzenal</span>
+          <span class="prod-chip">Grupo fechado</span>
+        </div>
+        <div style="margin-top:24px">
+          <a href="#cta-final" class="btn-gold" style="animation:none">QUERO SABER MAIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     FRONT LEGACY
+════════════════════════════ -->
+<section class="section prod-section" id="legacy" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="prod-grid">
+      <div class="rv-l">
+        <div class="prod-illus">
+          <img src="assets/prog-legacy.png" alt="Front Legacy">
+        </div>
+      </div>
+      <div class="prod-body rv-r">
+        <div class="prod-tag">Nível 04 · Mentoria Individual</div>
+        <h2 class="prod-name">Front<br><em style="color:var(--gold)">Legacy</em></h2>
+        <p class="prod-tagline">O nível mais alto do ecossistema.</p>
+        <p class="prod-desc">Sessões mensais individuais de 2 horas com acompanhamento anual contínuo. Empresa, vida e legado como dimensões integradas — com atenção 100% dedicada ao seu contexto específico.</p>
+        <ul class="prod-modules">
+          <li>Sessões mensais individuais de 2 horas</li>
+          <li>Acompanhamento anual contínuo</li>
+          <li>Empresa, vida e legado como dimensões integradas</li>
+        </ul>
+        <div class="prod-detail">
+          <span class="prod-chip">Individual</span>
+          <span class="prod-chip">Sessões 2h/mês</span>
+          <span class="prod-chip">Acompanhamento anual</span>
+        </div>
+        <p style="font-size:13px;color:var(--fgm);margin-top:12px;padding:14px;background:var(--bg3);border:1px solid var(--gold-b);border-radius:8px;line-height:1.7"><strong style="color:var(--gold)">Entregáveis opcionais:</strong> Social Media, Site, Tráfego Pago, IAs e CRM</p>
+        <div style="margin-top:24px">
+          <a href="#cta-final" class="btn-gold" style="animation:none">QUERO SABER MAIS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="mentores">
+  <div class="wrap">
+    <div class="rv" style="text-align:center">
+      <span class="s-tag">Quem Conduz</span>
+      <h2 class="s-title">Os <em>Mentores</em></h2>
+      <div class="divider" style="margin-left:auto;margin-right:auto"></div>
+    </div>
+    <div class="mentores-grid">
+      <div class="mc rv-l">
+        <div class="mc-photo">
+          <img src="assets/Braian_oficial.png" alt="Braian Corrêa" style="object-position:center 8%;object-fit:cover;width:100%;height:100%">
+          <div class="mc-photo-grad"></div>
+          <span class="mc-pill">Co-fundador</span>
+        </div>
+        <div class="mc-body">
+          <h3>Braian Corrêa</h3>
+          <span class="mc-role">Co-fundador Fé no Front · CEO Grupo Brava · Mentorado Vende-C</span>
+          <p>Faz a pergunta que ninguém quer ouvir: você sabe o que você realmente vende? CEO do Grupo Brava — faturamento em torno de R$6 milhões em múltiplos segmentos.</p>
+          <p>Conduz o bloco de produto, modelo de negócio e esteira de ofertas. Como criar previsibilidade de receita e parar de depender de uma única fonte de faturamento.</p>
+          <div class="mc-pills">
+            <span class="mpill">CEO · Grupo Brava R$6M+</span>
+            <span class="mpill">Co-fundador FnF</span>
+            <span class="mpill">Mentorado Vende-C</span>
+          </div>
+        </div>
+      </div>
+      <div class="mc rv-r">
+        <div class="mc-photo">
+          <img src="assets/Nando.png" alt="Nando Borba" style="width:100%;height:100%;object-fit:cover;object-position:center 10%">
+          <div class="mc-photo-grad"></div>
+          <span class="mc-pill">Co-fundador</span>
+        </div>
+        <div class="mc-body">
+          <h3>Nando Borba</h3>
+          <span class="mc-role">Co-fundador Fé no Front · Fundador Elite Mídias · Google Partner</span>
+          <p>Mais de R$5M em vendas corporativas B2B, R$3M faturados no digital. Centenas de empresas atendidas pela Elite Mídias com diagnóstico individual.</p>
+          <p>Não é palestrante motivacional. Abre o painel de métricas do seu negócio e mostra, com números, o que está funcionando e o que está queimando dinheiro.</p>
+          <div class="mc-pills">
+            <span class="mpill">+R$10M em vendas B2B</span>
+            <span class="mpill">+R$5M no digital</span>
+            <span class="mpill">Google Partner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     EVENTOS ANTERIORES
+════════════════════════════ -->
+<section class="section" id="eventos">
+  <div class="wrap">
+    <div class="rv">
+      <span class="s-tag">Registros</span>
+      <h2 class="s-title">Eventos <em>anteriores</em></h2>
+      <div class="divider"></div>
+      <p class="s-sub">Da imersão FronteSara ao Operação Rio — cada edição deixa empresários com coordenadas mais claras para os próximos 90 dias.</p>
+    </div>
+  </div>
+  <div class="ticker-wrap rv">
+    <div class="ticker-inner" id="ticker">
+      <img src="assets/evento-3pessoas-edited.jpeg" alt="">
+      <img src="assets/evento-plateia-1.jpeg" alt="">
+      <img src="assets/evento-plateia-2.jpeg" alt="">
+      <img src="assets/localdoevento.jpg" alt="">
+      <img src="assets/evento-3pessoas-edited.jpeg" alt="">
+      <img src="assets/evento-plateia-1.jpeg" alt="">
+      <img src="assets/evento-plateia-2.jpeg" alt="">
+      <img src="assets/localdoevento.jpg" alt="">
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:24px">
+    <div class="rv" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <p style="font-size:13px;color:var(--fgm);font-style:italic">Registros da imersão FronteSara · próxima edição: Operação Rio, 15 de Maio</p>
+      <a href="ui_kits/website/index.html" class="evento-link">VER EVENTO →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     QG
+════════════════════════════ -->
+<section class="section" id="qg">
+  <div class="wrap">
+    <div class="qg-grid">
+      <div class="rv-l">
+        <span class="s-tag">Nosso Espaço</span>
+        <h2 class="s-title">O <em>QG</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:17px;color:var(--fgm);line-height:1.8;margin-bottom:32px;">Em breve, o Fé no Front terá um espaço físico dedicado. Um quartel general onde empresários se encontram, produzem, e crescem juntos.</p>
+        <div class="qg-feats">
+          <div class="qg-feat rv d1">
+            <div class="qg-feat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2" stroke-width="1.5"/><path d="M8 6V4M16 6V4" stroke-width="1.5"/><path d="M3 10h18" stroke-width="1.5"/></svg></div>
+            <div><h5>Mesa de Reuniões</h5><p class="qg-feat p" style="font-size:13px;color:var(--fgm);line-height:1.6">Sessões do Clube, mentorias e encontros estratégicos. Um ambiente construído para conversas de alto nível.</p></div>
+          </div>
+          <div class="qg-feat rv d2">
+            <div class="qg-feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72" stroke-width="1.5"/><path d="M2 12h20" stroke-width="1.5"/><path d="M2 12c3.24 4.35 8.94 6.66 16.88 5.85" stroke-width="1.5"/></svg></div>
+            <div><h5>Estúdio de Podcast</h5><p style="font-size:13px;color:var(--fgm);line-height:1.6">Produção de conteúdo estratégico direto do QG. Entrevistas, bastidores e conteúdo exclusivo para membros do Clube.</p></div>
+          </div>
+          <div class="qg-feat rv d3">
+            <div class="qg-feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-width="1.5"/></svg></div>
+            <div><h5>Espaço de Aulas do Clube</h5><p style="font-size:13px;color:var(--fgm);line-height:1.6">Sala dedicada aos encontros presenciais dos membros. Treinamentos, workshops e networking da comunidade.</p></div>
+          </div>
+        </div>
+        <div class="qg-em-obra" style="margin-top:24px">⚙ Em construção · Localização em breve</div>
+      </div>
+      <div class="rv-r">
+        <div class="qg-placeholder">
+          <div class="qg-ph-icon"><svg viewBox="0 0 48 48"><rect x="6" y="20" width="36" height="22" rx="2" stroke-width="1.5" stroke="currentColor" fill="none"/><path d="M2 20L24 6L46 20" stroke-width="1.5" stroke="currentColor" fill="none"/><rect x="18" y="30" width="12" height="12" rx="1" stroke-width="1.5" stroke="currentColor" fill="none"/></svg></div>
+          <div class="qg-ph-label">FOTOS EM BREVE</div>
+          <div class="qg-ph-sub">QG em reforma · localização a divulgar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     CTA FINAL
+════════════════════════════ -->
+<section id="cta-final">
+  <div class="cta-inner">
+    <div class="rv">
+      <span class="s-tag">Decisão</span>
+      <h2 class="s-title" style="max-width:680px;margin:16px auto 14px">Você viu o método.<br><em>Agora escolha seu nível.</em></h2>
+      <div class="divider" style="margin:18px auto 40px"></div>
+    </div>
+    <p class="cta-body rv">
+      Você acorda cedo, fecha o caixa tarde, e o número não reflete o que você entregou.<br>
+      <strong>Não é falta de esforço. É falta de direção estratégica.</strong> É exatamente disso que o Fé no Front trata.
+    </p>
+    <div class="rv" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="#jornada" class="btn-gold" style="animation:none;padding:18px 44px;font-size:15px">VER OS PROGRAMAS</a>
+      <a href="https://wa.me/55XXXXXXXXXXX" class="btn-outline" style="padding:17px 32px">FALAR NO WHATSAPP</a>
+    </div>
+    <div class="cta-assin rv">
+      <span>Uma iniciativa</span>
+      <img src="assets/logo-fe-no-front-transparente.png" alt="Fé no Front" style="width: 100px; height: 100px">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="assets/logo-fe-no-front-transparente.png" alt="Fé no Front" class="footer-logo">
+  <div class="footer-links">
+    <a href="#metodo">Método</a>
+    <a href="#jornada">Programas</a>
+    <a href="#mentores">Mentores</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#qg">QG</a>
+  </div>
+  <div class="footer-copy">Uma iniciativa Fé no Front · Nando Borba &amp; Braian Corrêa<br>© 2026 Fé no Front. Todos os direitos reservados.</div>
+</footer>
+
+<!-- WA FAB -->
+<a href="https://wa.me/55XXXXXXXXXXX" class="wa-fab" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>Falar com a equipe</span>
+</a>
+
+<script>
+// ── NAV ──
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>60));
+
+// ── HERO CANVAS — tactical grid + nodes ──
+const canvas=document.getElementById('hero-canvas');
+const ctx=canvas.getContext('2d');
+let nodes=[];
+function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+function mkNodes(){
+  nodes=[];
+  const n=Math.floor(canvas.width*canvas.height/10000);
+  for(let i=0;i<n;i++) nodes.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.2+.4});
+}
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // grid
+  ctx.strokeStyle='rgba(201,162,39,.03)';ctx.lineWidth=1;
+  const g=64;
+  for(let x=0;x<canvas.width;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()}
+  for(let y=0;y<canvas.height;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}
+  // tactical corners
+  ctx.strokeStyle='rgba(201,162,39,.15)';ctx.lineWidth=1;
+  const b=10;
+  for(let x=g;x<canvas.width-g;x+=g*5)for(let y=g;y<canvas.height-g;y+=g*4){
+    ctx.beginPath();ctx.moveTo(x,y+b);ctx.lineTo(x,y);ctx.lineTo(x+b,y);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+g-b,y);ctx.lineTo(x+g,y);ctx.lineTo(x+g,y+b);ctx.stroke();
+  }
+  // nodes
+  nodes.forEach(n=>{
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0||n.x>canvas.width)n.vx*=-1;
+    if(n.y<0||n.y>canvas.height)n.vy*=-1;
+    ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(201,162,39,.4)';ctx.fill();
+  });
+  // connections
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<100){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+      ctx.strokeStyle='rgba(201,162,39,'+((.06)*(1-d/100))+')';ctx.lineWidth=.8;ctx.stroke()}
+  }
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',()=>{resize();mkNodes()});
+resize();mkNodes();draw();
+
+// ── PARALLAX HERO BG ──
+const heroBg=document.getElementById('hero-bg');
+window.addEventListener('scroll',()=>{
+  const s=scrollY;
+  heroBg.style.transform='scale(1.06) translateY('+(s*.3)+'px)';
+},{passive:true});
+
+// ── SCROLL REVEAL ──
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>io.observe(el));
+
+// ── STATS COUNTER ──
+function animStat(el){
+  const target=+el.dataset.target,prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'';
+  const dur=1600,start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);
+    el.textContent=prefix+(target>=100?Math.round(target*ease):(target*ease).toFixed(0))+suffix;
+    if(p<1)requestAnimationFrame(step);else el.textContent=prefix+target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+const so=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.target){animStat(e.target);so.unobserve(e.target)}});
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>so.observe(el));
+
+// ── TRILHA INTERATIVA ──
+const RESULTS = {
+  club:   { badge:'NÍVEL 01', name:'FNF <em>Club</em>',             desc:'Você está no momento certo para entrar no ecossistema. O FNF Club é a sua porta de entrada — uma comunidade de empreendedores que fazem negócios entre si, com curadoria de membros e acesso ao QG.', href:'#clube',  cta:'CONHECER O FNF CLUB' },
+  fbs:    { badge:'NÍVEL 02', name:'Front Business <em>School</em>', desc:'Você tem o negócio, mas precisa de estrutura e método. A Front Business School foi feita para você: 4 meses, currículo fixo, pequenos grupos, e entrega com plano de negócio + estratégia validada pelos fundadores.', href:'#fbs',    cta:'CONHECER A FBS' },
+  squad:  { badge:'NÍVEL 03', name:'Front <em>Squad</em>',           desc:'Você já tem base e quer evoluir junto com pares do mesmo nível. O Front Squad é mentoria em grupo com encontros presenciais mensais e online quinzenais — ritmo, responsabilidade e perspectiva real.', href:'#squad',  cta:'CONHECER O FRONT SQUAD' },
+  legacy: { badge:'NÍVEL 04', name:'Front <em>Legacy</em>',          desc:'Você está pronto para o nível mais alto. Sessões mensais individuais de 2 horas com acompanhamento anual — atenção 100% dedicada ao seu negócio, vida e legado.', href:'#legacy', cta:'CONHECER O FRONT LEGACY' }
+};
+
+const STEP1_OPTS = [
+  [ { label:'Pertencer a uma comunidade de negócios', sub:'Quero fazer negócios com outros empreendedores', result:'club',  icon:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>' },
+    { label:'Estruturar meu negócio com método',       sub:'Preciso de currículo, plano e estratégia validada', result:'fbs',   icon:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>' } ],
+  [ { label:'Pertencer a uma comunidade de negócios', sub:'Quero fazer negócios com outros empreendedores', result:'club',  icon:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>' },
+    { label:'Método + estrutura primeiro',              sub:'Quero a FBS antes de qualquer coisa',              result:'fbs',   icon:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>' } ]
+];
+
+let trilhaPath = -1;
+
+function trilhaNext(step, choice) {
+  if (step === 0) {
+    trilhaPath = choice;
+    if (choice === 2) { showTrilhaStep('ts1b'); }
+    else {
+      const cont = document.getElementById('ts1-opts');
+      cont.innerHTML = STEP1_OPTS[choice].map(o =>
+        '<button class="trilha-opt" onclick="trilhaResult(\''+o.result+'\')"><div class="trilha-opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+o.icon+'</svg></div><div><strong>'+o.label+'</strong><span>'+o.sub+'</span></div></button>'
+      ).join('');
+      showTrilhaStep('ts1');
+    }
+    markTrilhaDot(1);
+  }
+}
+
+function trilhaResult(key) {
+  const r = RESULTS[key];
+  document.getElementById('trilha-result-content').innerHTML =
+    '<div class="trilha-result-badge">'+r.badge+'</div><h3>'+r.name+'</h3><p>'+r.desc+'</p><a href="'+r.href+'" class="trilha-result-cta">'+r.cta+' \u2192</a>';
+  showTrilhaStep('ts-result');
+  markTrilhaDot(2);
+}
+
+function trilhaBack(from) { showTrilhaStep('ts0'); markTrilhaDot(0); trilhaPath = -1; }
+function trilhaReset()    { showTrilhaStep('ts0'); markTrilhaDot(0); trilhaPath = -1; }
+
+function showTrilhaStep(id) {
+  document.querySelectorAll('.trilha-step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function markTrilhaDot(n) {
+  document.querySelectorAll('.trilha-dot').forEach((d,i) => d.classList.toggle('done', i <= n));
+}
+
+// ── DEPOIMENTO EUDES ──
+(function(){
+  var vid = document.getElementById('eudes-video');
+  var overlay = document.getElementById('eudes-overlay');
+  var soundBtn = document.getElementById('eudes-sound');
+  if(!vid) return;
+  vid.addEventListener('play', function(){
+    if(overlay) overlay.classList.add('hidden');
+    if(soundBtn) soundBtn.classList.add('visible');
+  });
+  vid.addEventListener('pause', function(){
+    if(overlay) overlay.classList.remove('hidden');
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && e.intersectionRatio >= 0.5){
+        vid.play().catch(function(){});
+      } else {
+        vid.pause();
+      }
+    });
+  },{threshold:0.5});
+  io.observe(vid);
+})();
+function eudesToggle(){
+  var vid = document.getElementById('eudes-video');
+  if(!vid) return;
+  vid.paused ? vid.play().catch(function(){}) : vid.pause();
+}
+function eudesSound(){
+  var vid = document.getElementById('eudes-video');
+  var btn = document.getElementById('eudes-sound');
+  if(!vid||!btn) return;
+  vid.muted = !vid.muted;
+  btn.textContent = vid.muted ? '🔇 SOM' : '🔊 SOM';
+}
+
+// ── TWEAKS ──
+window.addEventListener('message',e=>{
+  if(e.data?.type==='__activate_edit_mode'){}
+  if(e.data?.type==='__deactivate_edit_mode'){}
+});
+window.parent.postMessage({type:'__edit_mode_available'},'*');
+</script>
+</body>
+</html>
