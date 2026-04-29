@@ -208,12 +208,12 @@ nav.solid{background:rgba(13,13,13,.96);backdrop-filter:blur(16px);border-bottom
 .front-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
   background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));
   transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
-.front-card:hover{border-color:rgba(201,162,39,.55);transform:translateY(-8px);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 32px rgba(201,162,39,.1)}
-.front-card:hover::after{transform:scaleX(1)}
+.front-card:hover,.front-card.active{border-color:rgba(201,162,39,.55);transform:translateY(-8px);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 32px rgba(201,162,39,.1)}
+.front-card:hover::after,.front-card.active::after{transform:scaleX(1)}
 .f-letter{font-family:'Bebas Neue';font-size:88px;line-height:.9;
   color:transparent;-webkit-text-stroke:1px rgba(201,162,39,.22);
   margin-bottom:16px;transition:color .35s,-webkit-text-stroke .35s}
-.front-card:hover .f-letter{color:var(--gold);-webkit-text-stroke:1px var(--gold)}
+.front-card:hover .f-letter,.front-card.active .f-letter{color:var(--gold);-webkit-text-stroke:1px var(--gold)}
 .f-word{font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;color:var(--gold);margin-bottom:12px}
 .f-desc{font-size:13px;color:var(--fgm);line-height:1.7}
 
@@ -593,12 +593,12 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
       <div class="front-card rv d1">
         <div class="f-letter">F</div>
         <div class="f-word">FOCO</div>
-        <p class="f-desc">Clareza de propósito antes de qualquer movimento. Saber exatamente onde você está e para onde quer ir — em números, prazos e estrutura, não em sonhos.</p>
+        <p class="f-desc">Clareza de propósito antes de qualquer movimento. Saber exatamente onde você está e para onde quer ir: em números, prazos e estrutura, não em sonhos.</p>
       </div>
       <div class="front-card rv d2">
         <div class="f-letter">R</div>
         <div class="f-word">ROTA</div>
-        <p class="f-desc">O mapa financeiro e operacional do crescimento. Quanto investir, onde alocar, qual margem sustentar. A conta, não o chute — decisão com critério.</p>
+        <p class="f-desc">O mapa financeiro e operacional do crescimento. Quanto investir, onde alocar, qual margem sustentar. A conta, não o chute. Decisão com critério.</p>
       </div>
       <div class="front-card rv d3">
         <div class="f-letter">O</div>
@@ -716,11 +716,11 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
           <div class="trilha-opts">
             <button class="trilha-opt" onclick="trilhaResult('squad')">
               <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-              <div><strong>Em grupo — com pares do mesmo nível</strong><span>Prefiro evoluir junto, compartilhar e aprender com outros</span></div>
+              <div><strong>Em grupo, com pares do mesmo nível</strong><span>Prefiro evoluir junto, compartilhar e aprender com outros</span></div>
             </button>
             <button class="trilha-opt" onclick="trilhaResult('legacy')">
               <div class="trilha-opt-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
-              <div><strong>Individual — com atenção dedicada aos meus desafios</strong><span>Quero um mentor focado 100% no meu negócio</span></div>
+              <div><strong>Individual, com atenção dedicada aos meus desafios</strong><span>Quero um mentor focado 100% no meu negócio</span></div>
             </button>
           </div>
           <button class="trilha-back" onclick="trilhaBack('1b')">← Voltar</button>
@@ -775,10 +775,10 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         <div class="j-tag">PROGRAMA · 4 MESES</div>
         <p class="j-desc">Currículo fixo em pequenos grupos com acompanhamento próximo. Entra no improviso, sai com negócio estruturado, plano pronto e estratégia validada.</p>
         <ul class="j-list">
-          <li>Mód. 1 — Estrutura de negócio</li>
-          <li>Mód. 2 — Produto e precificação</li>
-          <li>Mód. 3 — Marketing e vendas</li>
-          <li>Mód. 4 — Finanças e indicadores</li>
+          <li>Mód. 1: Estrutura de negócio</li>
+          <li>Mód. 2: Produto e precificação</li>
+          <li>Mód. 3: Marketing e vendas</li>
+          <li>Mód. 4: Finanças e indicadores</li>
           <li>Entrega: Plano + BMC + validação</li>
         </ul>
       </div>
@@ -829,13 +829,13 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         <span class="s-tag">Nível 01 · Comunidade</span>
         <h2 class="s-title">FNF <em>Club</em></h2>
         <div class="divider"></div>
-        <p style="font-size:17px;color:var(--fgm);line-height:1.8;margin-bottom:12px;">Uma comunidade de negócios — não de cursos.</p>
-        <p style="font-size:15px;color:var(--fgm);line-height:1.8;margin-bottom:32px;">O valor principal não é o que os fundadores entregam. É o que os <strong style="color:var(--fg)">membros geram entre si</strong> — negócios fechados, parcerias formadas, oportunidades que só existem dentro do ecossistema.</p>
+        <p style="font-size:17px;color:var(--fgm);line-height:1.8;margin-bottom:12px;">Uma comunidade de negócios, não de cursos.</p>
+        <p style="font-size:15px;color:var(--fgm);line-height:1.8;margin-bottom:32px;">O valor principal não é o que os fundadores entregam. É o que os <strong style="color:var(--fg)">membros geram entre si</strong>: negócios fechados, parcerias formadas, oportunidades que só existem dentro do ecossistema.</p>
         <ul class="clube-benefits">
           <li><div class="check">✓</div><span>Comunidade de negócios com curadoria de membros</span></li>
           <li><div class="check">✓</div><span>Encontros presenciais e ambiente de conexão real</span></li>
           <li><div class="check">✓</div><span>Acesso ao QG Fé no Front</span></li>
-          <li><div class="check">✓</div><span>Fundadores como curadores — não como professores</span></li>
+          <li><div class="check">✓</div><span>Fundadores como curadores, não como professores</span></li>
           <li><div class="check">✓</div><span>Porta de entrada para a Front Business School</span></li>
         </ul>
         <div style="margin-top:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
@@ -942,10 +942,10 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         <div class="prod-tag">Nível 03 · Mentoria em Grupo</div>
         <h2 class="prod-name">Front<br><em style="color:var(--gold)">Squad</em></h2>
         <p class="prod-tagline">Evolua junto com pares do mesmo nível.</p>
-        <p class="prod-desc">Mentoria em grupo com formato híbrido — encontro presencial mensal e encontro online quinzenal. Para quem já tem estrutura e quer avançar com ritmo, responsabilidade mútua e perspectivas reais de outros empresários.</p>
+        <p class="prod-desc">Mentoria em grupo com formato híbrido: encontro presencial mensal e encontro online quinzenal. Para quem já tem estrutura e quer avançar com ritmo, responsabilidade mútua e perspectivas reais de outros empresários.</p>
         <ul class="prod-modules">
-          <li>Encontro presencial mensal — meio período, tema definido</li>
-          <li>Encontro online quinzenal — acompanhamento e indicadores</li>
+          <li>Encontro presencial mensal, meio período, tema definido</li>
+          <li>Encontro online quinzenal, acompanhamento e indicadores</li>
           <li>Temas: delegação, gestão de time, expansão, escala</li>
         </ul>
         <div class="prod-detail">
@@ -977,7 +977,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         <div class="prod-tag">Nível 04 · Mentoria Individual</div>
         <h2 class="prod-name">Front<br><em style="color:var(--gold)">Legacy</em></h2>
         <p class="prod-tagline">O nível mais alto do ecossistema.</p>
-        <p class="prod-desc">Sessões mensais individuais de 2 horas com acompanhamento anual contínuo. Empresa, vida e legado como dimensões integradas — com atenção 100% dedicada ao seu contexto específico.</p>
+        <p class="prod-desc">Sessões mensais individuais de 2 horas com acompanhamento anual contínuo. Empresa, vida e legado como dimensões integradas, com atenção 100% dedicada ao seu contexto específico.</p>
         <ul class="prod-modules">
           <li>Sessões mensais individuais de 2 horas</li>
           <li>Acompanhamento anual contínuo</li>
@@ -1030,8 +1030,8 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         </div>
         <div class="mc-body">
           <h3>Nando Borba</h3>
-          <span class="mc-role">Co-fundador Fé no Front · Fundador Elite Mídias · Google Partner</span>
-          <p>Mais de R$5M em vendas corporativas B2B, R$3M faturados no digital. Centenas de empresas atendidas pela Elite Mídias com diagnóstico individual.</p>
+          <span class="mc-role">Co-fundador Fé no Front · Fundador Elite Mídias · Google Partner · Cientista do Marketing · Gestor Comercial</span>
+          <p>Mais de R$10M em vendas B2B e R$5M no digital. Centenas de empresas atendidas pela Elite Mídias com diagnóstico individual.</p>
           <p>Não é palestrante motivacional. Abre o painel de métricas do seu negócio e mostra, com números, o que está funcionando e o que está queimando dinheiro.</p>
           <div class="mc-pills">
             <span class="mpill">+R$10M em vendas B2B</span>
@@ -1053,7 +1053,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
       <span class="s-tag">Registros</span>
       <h2 class="s-title">Eventos <em>anteriores</em></h2>
       <div class="divider"></div>
-      <p class="s-sub">Da imersão FronteSara ao Operação Rio — cada edição deixa empresários com coordenadas mais claras para os próximos 90 dias.</p>
+      <p class="s-sub">Cada edição da imersão Dimension deixa empresários com coordenadas mais claras para os próximos 90 dias.</p>
     </div>
   </div>
   <div class="ticker-wrap rv">
@@ -1070,7 +1070,6 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
   </div>
   <div class="wrap" style="margin-top:24px">
     <div class="rv" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <p style="font-size:13px;color:var(--fgm);font-style:italic">Registros da imersão FronteSara · próxima edição: Operação Rio, 15 de Maio</p>
       <a href="ui_kits/website/index.html" class="evento-link">VER EVENTO →</a>
     </div>
   </div>
@@ -1321,6 +1320,15 @@ function eudesSound(){
   vid.muted = !vid.muted;
   btn.textContent = vid.muted ? '🔇 SOM' : '🔊 SOM';
 }
+
+// ── FRONT-CARD MOBILE TAP ──
+document.querySelectorAll('.front-card').forEach(card=>{
+  card.addEventListener('touchstart',()=>{
+    const wasActive=card.classList.contains('active');
+    document.querySelectorAll('.front-card.active').forEach(c=>c.classList.remove('active'));
+    if(!wasActive) card.classList.add('active');
+  },{passive:true});
+});
 
 // ── TWEAKS ──
 window.addEventListener('message',e=>{
