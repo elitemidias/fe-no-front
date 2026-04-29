@@ -422,7 +422,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
   width:240px;background:linear-gradient(180deg,rgba(201,162,39,.06),rgba(201,162,39,.02));
   border:1px solid var(--gold-b);border-radius:12px;
   padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;will-change:transform;
   transition:border-color .35s ease,background .35s ease,transform .35s ease}
 .prod-mod::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;
   background:var(--gold);transition:height .4s ease}
@@ -1321,6 +1321,24 @@ function eudesSound(){
   vid.muted = !vid.muted;
   btn.textContent = vid.muted ? '🔇 SOM' : '🔊 SOM';
 }
+
+// ── CAROUSEL LOCK — impede que o swipe horizontal arraste a página ──
+document.querySelectorAll('.prod-mods-track').forEach(function(track){
+  var startX=0,startY=0,locked=false;
+  track.addEventListener('touchstart',function(e){
+    startX=e.touches[0].pageX;
+    startY=e.touches[0].pageY;
+    locked=false;
+  },{passive:true});
+  track.addEventListener('touchmove',function(e){
+    var dx=Math.abs(e.touches[0].pageX-startX);
+    var dy=Math.abs(e.touches[0].pageY-startY);
+    if(!locked){
+      if(dx>dy){locked=true;}
+    }
+    if(locked){e.preventDefault();}
+  },{passive:false});
+});
 
 // ── FRONT-CARD MOBILE TAP ──
 document.querySelectorAll('.front-card').forEach(card=>{
