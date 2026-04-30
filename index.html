@@ -44,8 +44,8 @@
   --bg:#0D0D0D;--bg2:#111;--bg3:#1A1A1A;
   --fg:#E8E8E8;--fgm:#8A8A8A;
 }
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:clip;line-height:1.6}
 
 /* grain overlay */
 body::before{content:'';position:fixed;inset:0;
@@ -413,7 +413,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
 .prod-tagline{font-size:15px;color:var(--fgm);font-style:italic}
 .prod-desc{font-size:15px;color:var(--fgm);line-height:1.8}
 /* ── PROD MODULES CAROUSEL ── */
-.prod-mods{margin:8px 0 4px;position:relative;overflow:hidden}
+.prod-mods{margin:8px 0 4px;position:relative;overflow:clip}
 .prod-mods-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
   padding:4px 4px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
   touch-action:pan-x;overscroll-behavior-x:contain}
