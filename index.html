@@ -44,7 +44,7 @@
   --bg:#0D0D0D;--bg2:#111;--bg3:#1A1A1A;
   --fg:#E8E8E8;--fgm:#8A8A8A;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
 
 /* grain overlay */
@@ -413,7 +413,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
 .prod-tagline{font-size:15px;color:var(--fgm);font-style:italic}
 .prod-desc{font-size:15px;color:var(--fgm);line-height:1.8}
 /* ── PROD MODULES CAROUSEL ── */
-.prod-mods{margin:8px 0 4px;position:relative;overflow-x:clip}
+.prod-mods{margin:8px 0 4px;position:relative;overflow:hidden}
 .prod-mods-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
   padding:4px 4px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
   touch-action:pan-x;overscroll-behavior-x:contain}
@@ -439,7 +439,7 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
 .prod-mods-hint svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:swipeHint 1.6s ease-in-out infinite}
 @keyframes swipeHint{0%,100%{transform:translateX(0);opacity:.7}50%{transform:translateX(6px);opacity:1}}
 @media(min-width:768px){
-  .prod-mods-track{display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow:visible;padding:4px 0}
+  .prod-mods-track{display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow:hidden;padding:4px 0}
   .prod-mod{width:auto}
   .prod-mods-hint{display:none}
 }
@@ -1323,30 +1323,6 @@ function eudesSound(){
   vid.muted = !vid.muted;
   btn.textContent = vid.muted ? '🔇 SOM' : '🔊 SOM';
 }
-
-// ── CAROUSEL — scroll manual no eixo X, libera scroll Y da página ──
-document.querySelectorAll('.prod-mods-track').forEach(function(track){
-  var startX=0,startY=0,startScroll=0,locked=null;
-  track.addEventListener('touchstart',function(e){
-    startX=e.touches[0].pageX;
-    startY=e.touches[0].pageY;
-    startScroll=track.scrollLeft;
-    locked=null;
-  },{passive:true});
-  track.addEventListener('touchmove',function(e){
-    if(!e.cancelable)return;
-    var dx=e.touches[0].pageX-startX;
-    var dy=e.touches[0].pageY-startY;
-    if(locked===null){
-      if(Math.abs(dx)+Math.abs(dy)<6)return;
-      locked=Math.abs(dx)>Math.abs(dy);
-    }
-    if(locked){
-      e.preventDefault();
-      track.scrollLeft=startScroll-dx;
-    }
-  },{passive:false});
-});
 
 // ── FRONT-CARD MOBILE TAP ──
 document.querySelectorAll('.front-card').forEach(card=>{
