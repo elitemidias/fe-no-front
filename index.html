@@ -44,8 +44,8 @@
   --bg:#0D0D0D;--bg2:#111;--bg3:#1A1A1A;
   --fg:#E8E8E8;--fgm:#8A8A8A;
 }
-html{scroll-behavior:smooth;overflow-x:clip}
-body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:clip;line-height:1.6}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
 
 /* grain overlay */
 body::before{content:'';position:fixed;inset:0;
@@ -412,37 +412,23 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
 .prod-name{font-family:'Bebas Neue';font-size:clamp(28px,4vw,44px);letter-spacing:1.5px;line-height:1.05}
 .prod-tagline{font-size:15px;color:var(--fgm);font-style:italic}
 .prod-desc{font-size:15px;color:var(--fgm);line-height:1.8}
-/* ── PROD MODULES CAROUSEL ── */
-.prod-mods{margin:8px 0 4px;position:relative;overflow:clip}
-.prod-mods-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:4px 4px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-  touch-action:pan-x;overscroll-behavior-x:contain}
-.prod-mods-track::-webkit-scrollbar{display:none}
-.prod-mod{flex-shrink:0;scroll-snap-align:start;
-  width:240px;background:linear-gradient(180deg,rgba(201,162,39,.06),rgba(201,162,39,.02));
+/* ── PROD MODULES GRID ── */
+.prod-mods{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 4px}
+@media(max-width:768px){.prod-mods{grid-template-columns:1fr;gap:10px}}
+.prod-mod{background:linear-gradient(180deg,rgba(201,162,39,.06),rgba(201,162,39,.02));
   border:1px solid var(--gold-b);border-radius:12px;
-  padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;
-  position:relative;overflow:hidden;will-change:transform;
-  transition:border-color .35s ease,background .35s ease,transform .35s ease}
+  padding:16px 18px;display:flex;flex-direction:column;gap:6px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s,background .3s}
 .prod-mod::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;
-  background:var(--gold);transition:height .4s ease}
+  background:var(--gold);transition:height .4s}
 @media(hover:hover){
-  .prod-mod:hover{border-color:rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.10),rgba(201,162,39,.04));transform:translateY(-3px)}
+  .prod-mod:hover{border-color:rgba(201,162,39,.45);background:linear-gradient(180deg,rgba(201,162,39,.10),rgba(201,162,39,.04))}
   .prod-mod:hover::before{height:100%}
 }
-.prod-mod-num{font-family:'Bebas Neue';font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;opacity:.85}
-.prod-mod-name{font-family:'Bebas Neue';font-size:22px;letter-spacing:1.5px;color:var(--fg);text-transform:uppercase;line-height:1.05}
-.prod-mod-content{font-size:13px;color:var(--fgm);line-height:1.65;margin-top:2px}
-.prod-mods-hint{display:flex;align-items:center;justify-content:flex-end;gap:8px;
-  font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);
-  opacity:.7;margin-top:-4px}
-.prod-mods-hint svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:swipeHint 1.6s ease-in-out infinite}
-@keyframes swipeHint{0%,100%{transform:translateX(0);opacity:.7}50%{transform:translateX(6px);opacity:1}}
-@media(min-width:768px){
-  .prod-mods-track{display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow:hidden;padding:4px 0}
-  .prod-mod{width:auto}
-  .prod-mods-hint{display:none}
-}
+.prod-mod-num{font-size:9px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;opacity:.85}
+.prod-mod-name{font-family:'Bebas Neue';font-size:20px;letter-spacing:1.5px;color:var(--fg);text-transform:uppercase;line-height:1.05}
+.prod-mod-content{font-size:13px;color:var(--fgm);line-height:1.6;margin-top:2px}
 .prod-detail{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .prod-chip{background:var(--gold-bg);border:1px solid var(--gold-b);color:var(--gold);font-size:11px;padding:4px 12px;border-radius:100px;white-space:nowrap}
 /* ── DEPOIMENTO ── */
@@ -888,31 +874,25 @@ footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.06);padding:4
         <p class="prod-tagline">Entra no improviso. Sai com negócio estruturado.</p>
         <p class="prod-desc">Currículo fixo em pequenos grupos com acompanhamento próximo dos fundadores. 4 meses, 4 módulos, 1 entrega: seu negócio com plano, modelo e estratégia validados.</p>
         <div class="prod-mods">
-          <div class="prod-mods-track">
-            <div class="prod-mod">
-              <div class="prod-mod-num">Módulo 01</div>
-              <div class="prod-mod-name">Estrutura</div>
-              <p class="prod-mod-content">Plano de Negócio, Modelo de Negócio e Planejamento Estratégico.</p>
-            </div>
-            <div class="prod-mod">
-              <div class="prod-mod-num">Módulo 02</div>
-              <div class="prod-mod-name">Produto</div>
-              <p class="prod-mod-content">Criação, Precificação e Esteira de Produto.</p>
-            </div>
-            <div class="prod-mod">
-              <div class="prod-mod-num">Módulo 03</div>
-              <div class="prod-mod-name">Escala</div>
-              <p class="prod-mod-content">Marketing, Canais de Aquisição e Vendas.</p>
-            </div>
-            <div class="prod-mod">
-              <div class="prod-mod-num">Módulo 04</div>
-              <div class="prod-mod-name">Finanças</div>
-              <p class="prod-mod-content">DRE, Fluxo de caixa, Indicadores e Capital de giro.</p>
-            </div>
+          <div class="prod-mod">
+            <div class="prod-mod-num">Módulo 01</div>
+            <div class="prod-mod-name">Estrutura</div>
+            <p class="prod-mod-content">Plano de Negócio, Modelo de Negócio e Planejamento Estratégico.</p>
           </div>
-          <div class="prod-mods-hint">
-            <span>Arraste</span>
-            <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
+          <div class="prod-mod">
+            <div class="prod-mod-num">Módulo 02</div>
+            <div class="prod-mod-name">Produto</div>
+            <p class="prod-mod-content">Criação, Precificação e Esteira de Produto.</p>
+          </div>
+          <div class="prod-mod">
+            <div class="prod-mod-num">Módulo 03</div>
+            <div class="prod-mod-name">Escala</div>
+            <p class="prod-mod-content">Marketing, Canais de Aquisição e Vendas.</p>
+          </div>
+          <div class="prod-mod">
+            <div class="prod-mod-num">Módulo 04</div>
+            <div class="prod-mod-name">Finanças</div>
+            <p class="prod-mod-content">DRE, Fluxo de caixa, Indicadores e Capital de giro.</p>
           </div>
         </div>
         <div class="prod-detail">
