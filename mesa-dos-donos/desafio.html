@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔥 Desafio Perfil que Vende — Mesa dos Donos</title>
+  <style>
+    :root {
+      --verde: #1a7a4a;
+      --verde-claro: #e8f5ee;
+      --verde-escuro: #145f39;
+      --amarelo: #f5a623;
+      --cinza: #f7f7f7;
+      --cinza-medio: #e0e0e0;
+      --texto: #1a1a1a;
+      --texto-suave: #666;
+      --branco: #fff;
+      --locked: #c8c8c8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f4f0;
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--verde);
+      color: white;
+      text-align: center;
+      padding: 32px 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      opacity: 0.85;
+      max-width: 400px;
+      margin: 0 auto 20px;
+      line-height: 1.5;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: 16px 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--verde);
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: var(--cinza-medio);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--verde), var(--amarelo));
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    /* ── NEXT MISSION COUNTDOWN ── */
+    #next-mission {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      border: 2px solid var(--verde-claro);
+      display: none;
+    }
+    #next-mission h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--texto-suave);
+      margin-bottom: 6px;
+    }
+    #next-mission p {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--verde);
+      margin-bottom: 12px;
+    }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+    .countdown-unit {
+      background: var(--verde-claro);
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-width: 56px;
+    }
+    .countdown-unit span:first-child {
+      display: block;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--verde);
+      line-height: 1;
+    }
+    .countdown-unit span:last-child {
+      display: block;
+      font-size: 10px;
+      color: var(--texto-suave);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* ── MISSION CARDS ── */
+    .mission-card {
+      background: var(--branco);
+      border-radius: 20px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .mission-card.unlocked:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .mission-card.locked { opacity: 0.6; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .card-header.locked { cursor: default; }
+
+    .day-badge {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .unlocked .day-badge { background: var(--verde-claro); }
+    .locked .day-badge { background: var(--cinza); }
+
+    .card-meta { flex: 1; }
+    .card-meta .day-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .unlocked .day-label { color: var(--verde); }
+    .locked .day-label { color: var(--locked); }
+    .card-meta h2 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--texto);
+    }
+    .locked .card-meta h2 { color: var(--locked); }
+    .card-meta .unlock-date {
+      font-size: 12px;
+      color: var(--texto-suave);
+      margin-top: 2px;
+    }
+
+    .card-arrow {
+      font-size: 18px;
+      color: var(--verde);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .card-arrow.open { transform: rotate(180deg); }
+    .locked .card-arrow { color: var(--locked); }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .badge-open   { background: #e8f5ee; color: var(--verde); }
+    .badge-locked { background: var(--cinza); color: var(--locked); }
+    .badge-done   { background: #fff8e1; color: #f5a623; }
+
+    .card-body {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--cinza);
+    }
+    .card-body.open { display: block; }
+
+    .mission-intro {
+      font-size: 14px;
+      color: var(--texto-suave);
+      line-height: 1.6;
+      padding: 14px 0 16px;
+    }
+
+    /* ── Blocos de conteúdo da missão ── */
+    .mission-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .mission-step {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--verde);
+    }
+    .step-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--verde);
+      margin-bottom: 5px;
+    }
+    .mission-step p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--texto);
+    }
+    .example-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .ex-good, .ex-bad {
+      font-size: 12.5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .ex-good { background: #e8f5ee; color: #1a5c38; }
+    .ex-bad  { background: #fce8e8; color: #8b1a1a; }
+
+    .freq-box {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .freq-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--texto-suave);
+      margin-bottom: 10px;
+    }
+    .freq-item {
+      font-size: 13px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--cinza-medio);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .freq-item:last-child { border-bottom: none; }
+    .freq-item .fi-label {
+      color: var(--verde);
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+
+    /* ── Bloco SUA MISSÃO ── */
+    .mission-task {
+      background: var(--verde);
+      color: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .mission-task .task-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.75;
+      margin-bottom: 6px;
+    }
+    .mission-task p {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+
+    /* ── Lembrete grupo ── */
+    .group-cta {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--verde);
+      background: var(--verde-claro);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    /* ── STICKY NAV ── */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--branco);
+      border-bottom: 1px solid var(--cinza-medio);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+    }
+    .nav-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--texto-suave);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown {
+      position: relative;
+      flex: 1;
+    }
+    .nav-dropdown-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--cinza);
+      border: 1.5px solid var(--cinza-medio);
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--texto);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .nav-dropdown-btn:hover { border-color: var(--verde); }
+    .nav-dropdown-btn .chevron {
+      font-size: 10px;
+      color: var(--texto-suave);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .nav-dropdown-btn.open .chevron { transform: rotate(180deg); }
+
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0; right: 0;
+      background: var(--branco);
+      border: 1.5px solid var(--cinza-medio);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      overflow: hidden;
+      z-index: 200;
+    }
+    .nav-dropdown-menu.open { display: block; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-bottom: 1px solid var(--cinza);
+      text-decoration: none;
+    }
+    .nav-item:last-child { border-bottom: none; }
+    .nav-item:hover { background: var(--cinza); }
+    .nav-item.locked-item { cursor: default; opacity: 0.5; }
+    .nav-item.locked-item:hover { background: transparent; }
+
+    .nav-item-icon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .nav-item.locked-item .nav-item-icon { background: var(--cinza); }
+    .nav-item:not(.locked-item) .nav-item-icon { background: var(--verde-claro); }
+
+    .nav-item-info { flex: 1; min-width: 0; }
+    .nav-item-info strong {
+      display: block;
+      font-size: 13px;
+      color: var(--texto);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-item-info span { font-size: 11px; color: var(--texto-suave); }
+    .nav-item-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .tag-open   { background: #e8f5ee; color: var(--verde); }
+    .tag-locked { background: var(--cinza); color: var(--locked); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--texto-suave);
+    }
+    footer a { color: var(--verde); text-decoration: none; font-weight: 600; }
+
+    /* ── Imagem de apoio ── */
+    .mission-img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: block;
+      cursor: zoom-in;
+      transition: opacity 0.2s;
+    }
+    .mission-img:hover { opacity: 0.9; }
+
+    /* ── Lightbox ── */
+    #lb {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    #lb.open { opacity: 1; pointer-events: all; }
+    #lb-img {
+      max-width: 94vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    #lb-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #lb-close:hover { background: rgba(255,255,255,0.28); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Mesa dos Donos</div>
+  <h1>🔥 Desafio<br>Perfil que Vende</h1>
+  <p>10 dias pra arrumar o perfil que tá fazendo o cliente passar reto sem você perceber.</p>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Seu progresso</span>
+      <span id="progress-text">0 de 5 missões</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav" id="sticky-nav">
+  <div class="nav-inner">
+    <span class="nav-label">Missões:</span>
+    <div class="nav-dropdown" id="navDropdown">
+      <button class="nav-dropdown-btn" id="navBtn" onclick="toggleNav()">
+        <span id="navBtnText">Selecione uma missão</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="nav-dropdown-menu" id="navMenu">
+        <!-- itens gerados pelo JS -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- Próxima missão countdown -->
+  <div id="next-mission">
+    <h3>Próxima missão</h3>
+    <p id="next-mission-name"></p>
+    <div class="countdown">
+      <div class="countdown-unit"><span id="cd-days">00</span><span>dias</span></div>
+      <div class="countdown-unit"><span id="cd-hours">00</span><span>horas</span></div>
+      <div class="countdown-unit"><span id="cd-mins">00</span><span>min</span></div>
+      <div class="countdown-unit"><span id="cd-secs">00</span><span>seg</span></div>
+    </div>
+  </div>
+
+  <!-- ══ MISSÕES ══ -->
+
+  <!-- DIA 1 -->
+  <div class="mission-card" id="card-1">
+    <div class="card-header" onclick="toggleCard(1)">
+      <div class="day-badge">📸</div>
+      <div class="card-meta">
+        <div class="day-label">Dia 1 · Terça, 27/mai</div>
+        <h2>A Vitrine do Seu Negócio</h2>
+      </div>
+      <span class="status-badge badge-open" id="badge-1">Aberta</span>
+      <span class="card-arrow" id="arrow-1">▾</span>
+    </div>
+    <div class="card-body" id="body-1">
+      <p class="mission-intro">O Instagram é a vitrine do seu negócio. A primeira impressão é formada em menos de 3 segundos quando alguém visita seu perfil. Hoje você ajusta os fundamentos que fazem alguém ficar — ou ir embora.</p>
+
+      <div class="mission-steps">
+        <div class="mission-step">
+          <div class="step-title">1. Nome de usuário (@)</div>
+          <p>Deve ser fácil de falar, fácil de digitar e ter o nome do seu negócio.</p>
+          <div class="example-row">
+            <span class="ex-good">✅ @salaobelezadamaria &nbsp;·&nbsp; @construtorapereira</span>
+            <span class="ex-bad">❌ @maria_84_linda &nbsp;·&nbsp; @biz2025xpto</span>
+          </div>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">2. Nome de exibição (aquele em negrito)</div>
+          <p>Esse campo aparece nas buscas do Instagram. Use: nome do negócio + o que você faz.</p>
+          <div class="example-row">
+            <span class="ex-good">✅ Maria Silva | Dentista em SP</span>
+            <span class="ex-good">✅ Construtora Pereira | Reformas e Obras</span>
+          </div>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">3. Foto de perfil</div>
+          <p>Uma regra só: precisa dar para reconhecer no tamanho de uma moeda.</p>
+          <div class="example-row">
+            <span class="ex-good">✅ Rosto sorrindo com boa iluminação (negócio pessoal)</span>
+            <span class="ex-good">✅ Logo em fundo limpo e legível (empresa)</span>
+          </div>
+        </div>
+      </div>
+
+      <img src="dia-01.jpg" alt="Como ajustar sua vitrine no Instagram" class="mission-img" />
+
+      <div class="mission-task">
+        <div class="task-label">🏆 Sua missão</div>
+        <p>Ajuste esses 3 pontos agora. Posta um print do seu perfil no grupo quando terminar!</p>
+      </div>
+      <div class="group-cta">💬 Feito? Posta o print do seu perfil no grupo!</div>
+    </div>
+  </div>
+
+  <!-- DIA 3 -->
+  <div class="mission-card" id="card-2">
+    <div class="card-header" id="header-2" onclick="toggleCard(2)">
+      <div class="day-badge">✍️</div>
+      <div class="card-meta">
+        <div class="day-label" id="label-2">Dia 3 · Quinta, 29/mai</div>
+        <h2>A Bio que Converte</h2>
+        <div class="unlock-date" id="unlock-2"></div>
+      </div>
+      <span class="status-badge" id="badge-2">Aberta</span>
+      <span class="card-arrow" id="arrow-2">▾</span>
+    </div>
+    <div class="card-body" id="body-2">
+      <p class="mission-intro">A bio é o seu vendedor 24 horas. Em 150 caracteres ela precisa responder 3 perguntas que o visitante faz sem perceber: isso é pra mim? Esse cara resolve meu problema? O que faço agora?</p>
+
+      <div class="mission-steps">
+        <div class="mission-step">
+          <div class="step-title">① Quem você atende</div>
+          <p>"Para donos de restaurante" &nbsp;·&nbsp; "Para mulheres acima de 40 anos"</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">② O que você resolve (resultado, não serviço)</div>
+          <div class="example-row">
+            <span class="ex-bad">❌ "Faço design gráfico"</span>
+            <span class="ex-good">✅ "Criamos identidades visuais que fazem seu negócio ser levado a sério"</span>
+          </div>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">③ Prova ou autoridade</div>
+          <p>"+200 clientes atendidos" &nbsp;·&nbsp; "10 anos no mercado"</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">④ O que fazer agora</div>
+          <p>"Clique no link" &nbsp;·&nbsp; "Manda um oi no WhatsApp"</p>
+        </div>
+      </div>
+
+      <img src="dia-03.jpg" alt="Como escrever uma bio que converte" class="mission-img" />
+
+      <div class="mission-task">
+        <div class="task-label">🏆 Sua missão</div>
+        <p>Reescreva sua bio usando a fórmula. Posta aqui a bio <strong>atual</strong> e a bio <strong>nova</strong> — a gente dá o feedback!</p>
+      </div>
+      <div class="group-cta">💬 Feito? Posta a sua bio nova no grupo!</div>
+    </div>
+  </div>
+
+  <!-- DIA 5 -->
+  <div class="mission-card" id="card-3">
+    <div class="card-header" id="header-3" onclick="toggleCard(3)">
+      <div class="day-badge">📌</div>
+      <div class="card-meta">
+        <div class="day-label" id="label-3">Dia 5 · Sábado, 31/mai</div>
+        <h2>Destaques Estratégicos</h2>
+        <div class="unlock-date" id="unlock-3"></div>
+      </div>
+      <span class="status-badge" id="badge-3">Aberta</span>
+      <span class="card-arrow" id="arrow-3">▾</span>
+    </div>
+    <div class="card-body" id="body-3">
+      <p class="mission-intro">Os destaques são o menu do seu negócio. É onde o visitante vai depois que leu sua bio. A maioria usa para guardar stories aleatórios — hoje você vai mudar isso.</p>
+
+      <div class="mission-steps">
+        <div class="mission-step">
+          <div class="step-title">1. Quem sou / Quem somos</div>
+          <p>Apresentação rápida. História, missão, bastidores. Gera conexão com quem ainda não te conhece.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">2. O que eu faço / Serviços ou Produtos</div>
+          <p>Mostre o que você vende com clareza. Fotos, vídeos, preços — tudo aqui.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">3. Depoimentos / Resultados</div>
+          <p>Prova social. Prints de clientes, antes e depois, avaliações. Isso vende sozinho.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">4. Dúvidas Frequentes</div>
+          <p>Responda o que você recebe todo dia no DM. Economiza tempo e já qualifica o cliente.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">5. Como contratar / Como funciona</div>
+          <p>O passo a passo para trabalhar com você. O cliente entende como começar sem precisar perguntar nada.</p>
+        </div>
+      </div>
+
+      <img src="dia-05.jpg" alt="Como organizar seus destaques estratégicos" class="mission-img" />
+
+      <div class="mission-task">
+        <div class="task-label">🏆 Sua missão</div>
+        <p>Organize seus 5 destaques agora. Use o Canva para criar capas na cor da sua marca — tem templates gratuitos!</p>
+      </div>
+      <div class="group-cta">💬 Feito? Posta um print dos seus destaques no grupo!</div>
+    </div>
+  </div>
+
+  <!-- DIA 7 -->
+  <div class="mission-card" id="card-4">
+    <div class="card-header" id="header-4" onclick="toggleCard(4)">
+      <div class="day-badge">🎯</div>
+      <div class="card-meta">
+        <div class="day-label" id="label-4">Dia 7 · Segunda, 02/jun</div>
+        <h2>Os 3 Tipos de Conteúdo</h2>
+        <div class="unlock-date" id="unlock-4"></div>
+      </div>
+      <span class="status-badge" id="badge-4">Aberta</span>
+      <span class="card-arrow" id="arrow-4">▾</span>
+    </div>
+    <div class="card-body" id="body-4">
+      <p class="mission-intro">Conteúdo não é sobre postar todo dia. É sobre postar certo. Todo perfil que vende mistura 3 tipos de publicação — e a maioria dos donos de negócio usa só um.</p>
+
+      <div class="mission-steps">
+        <div class="mission-step">
+          <div class="step-title">1️⃣ Mostra que você entende — 40%</div>
+          <p>Dica, ensino, resolve dúvida. Mostra que você sabe do que fala.<br><br>Tutoriais, erros comuns, conselhos práticos da sua área.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">2️⃣ Mostra quem você é — 30%</div>
+          <p>Bastidor, rotina, história. Cria conexão com quem te segue.<br><br>Dia a dia, opiniões, conquistas, dificuldades superadas.</p>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">3️⃣ Mostra que funciona — 30%</div>
+          <p>Cliente feliz, antes e depois. Prova que seu trabalho dá resultado.<br><br>Depoimentos, cases, comparativos.</p>
+        </div>
+      </div>
+
+      <div class="freq-box">
+        <div class="freq-title">Frequência mínima para um perfil ativo</div>
+        <div class="freq-item"><span class="fi-label">Feed</span> 3 posts por semana</div>
+        <div class="freq-item"><span class="fi-label">Stories</span> Todos os dias (pelo menos 3)</div>
+        <div class="freq-item"><span class="fi-label">Reels</span> 1 por semana</div>
+      </div>
+
+      <img src="dia-07.jpg" alt="Os 3 tipos de conteúdo que todo perfil precisa" class="mission-img" />
+
+      <div class="mission-task">
+        <div class="task-label">🏆 Sua missão</div>
+        <p>Olha seus últimos 9 posts. Quantos mostram que você entende? Quantos mostram quem você é? Quantos mostram que funciona? Posta a análise no grupo!</p>
+      </div>
+      <div class="group-cta">💬 Feito? Posta a análise dos seus posts no grupo!</div>
+    </div>
+  </div>
+
+  <!-- DIA 9 -->
+  <div class="mission-card" id="card-5">
+    <div class="card-header" id="header-5" onclick="toggleCard(5)">
+      <div class="day-badge">🎬</div>
+      <div class="card-meta">
+        <div class="day-label" id="label-5">Dia 9 · Quarta, 04/jun</div>
+        <h2>Stories e Reels na Prática</h2>
+        <div class="unlock-date" id="unlock-5"></div>
+      </div>
+      <span class="status-badge" id="badge-5">Aberta</span>
+      <span class="card-arrow" id="arrow-5">▾</span>
+    </div>
+    <div class="card-body" id="body-5">
+      <p class="mission-intro">A missão final — e a que mais trava os empresários: aparecer em vídeo. Vamos simplificar ao máximo para você não ter mais desculpa.</p>
+
+      <div class="mission-steps">
+        <div class="mission-step">
+          <div class="step-title">Stories — o que postar todo dia</div>
+          <div class="freq-box" style="background:transparent;padding:8px 0 0;margin:0;">
+            <div class="freq-item"><span class="fi-label">Seg/Qua/Sex</span> Bastidores do dia</div>
+            <div class="freq-item"><span class="fi-label">Ter/Qui</span> Uma dica rápida da sua área (30 seg)</div>
+            <div class="freq-item"><span class="fi-label">Sábado</span> Você sendo você — rotina, família, o que te move</div>
+            <div class="freq-item"><span class="fi-label">Sempre</span> Resultado de cliente, depoimento</div>
+          </div>
+        </div>
+        <div class="mission-step">
+          <div class="step-title">Reels — a fórmula que funciona</div>
+          <p><strong>① Os 2 primeiros segundos:</strong> Uma frase que faz o cara parar de rolar.<br>
+          <em>Ex: "O erro que faz seu cliente te ignorar no Instagram"</em></p>
+          <br>
+          <p><strong>② O conteúdo (2 a 40s):</strong> Entrega o que prometeu. Rápido, direto.</p>
+          <br>
+          <p><strong>③ Fechamento (últimos 5s):</strong> Pede pra seguir, comentar ou chamar no WhatsApp.</p>
+        </div>
+      </div>
+
+      <img src="dia-09.jpg" alt="Stories e Reels na prática" class="mission-img" />
+
+      <div class="mission-task">
+        <div class="task-label">🏆 Missão final</div>
+        <p>Grave 1 Reel hoje. 30 segundos, boa luz, uma dica do seu negócio. Manda no grupo!</p>
+      </div>
+
+      <div class="mission-step" style="background:#fff8e1;border-left-color:var(--amarelo);margin-bottom:14px;">
+        <div class="step-title" style="color:#b07d00;">🎉 Parabéns!</div>
+        <p>Você completou o Desafio Perfil que Vende.<br><br>
+        ✅ Identidade visual do perfil<br>
+        ✅ Bio que converte<br>
+        ✅ Destaques estratégicos<br>
+        ✅ Estratégia de conteúdo<br>
+        ✅ Stories e Reels na prática</p>
+      </div>
+
+      <div class="group-cta">💬 Missão completa? Posta aqui com um 🏆!</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Lightbox -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+  <button id="lb-close" aria-label="Fechar">✕</button>
+  <img id="lb-img" src="" alt="" />
+</div>
+
+<footer>
+  Feito com 🤍 pela <a href="https://mesa.fenofront.com.br" target="_blank">Mesa dos Donos</a>
+</footer>
+
+<script>
+  const missions = [
+    { id: 1, unlockDate: new Date('2026-05-27T08:00:00-03:00'), name: 'Dia 1 — A Vitrine do Seu Negócio',    icon: '📸', date: 'Terça, 27/mai' },
+    { id: 2, unlockDate: new Date('2026-05-29T08:00:00-03:00'), name: 'Dia 3 — A Bio que Converte',          icon: '✍️', date: 'Quinta, 29/mai' },
+    { id: 3, unlockDate: new Date('2026-05-31T08:00:00-03:00'), name: 'Dia 5 — Destaques Estratégicos',      icon: '📌', date: 'Sábado, 31/mai' },
+    { id: 4, unlockDate: new Date('2026-06-02T08:00:00-03:00'), name: 'Dia 7 — Os 3 Tipos de Conteúdo',     icon: '🎯', date: 'Segunda, 02/jun' },
+    { id: 5, unlockDate: new Date('2026-06-04T08:00:00-03:00'), name: 'Dia 9 — Stories e Reels na Prática', icon: '🎬', date: 'Quarta, 04/jun' },
+  ];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  const previewMode = new URLSearchParams(location.search).get('preview') === '1';
+
+  function applyStates() {
+    const now = new Date();
+    let unlockedCount = 0;
+    let nextMission = null;
+
+    missions.forEach(m => {
+      const card     = document.getElementById('card-' + m.id);
+      const badge    = document.getElementById('badge-' + m.id);
+      const arrow    = document.getElementById('arrow-' + m.id);
+      const header   = document.getElementById('header-' + m.id) || card.querySelector('.card-header');
+      const unlockEl = document.getElementById('unlock-' + m.id);
+
+      if (previewMode || now >= m.unlockDate) {
+        unlockedCount++;
+        card.classList.add('unlocked');
+        card.classList.remove('locked');
+        badge.textContent = 'Aberta';
+        badge.className = 'status-badge badge-open';
+        if (unlockEl) unlockEl.textContent = '';
+        header.style.cursor = 'pointer';
+      } else {
+        card.classList.add('locked');
+        card.classList.remove('unlocked');
+        badge.textContent = 'Bloqueada';
+        badge.className = 'status-badge badge-locked';
+        const d = m.unlockDate;
+        const opts = { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' };
+        if (unlockEl) unlockEl.textContent = '🔒 Libera ' + d.toLocaleString('pt-BR', opts);
+        header.onclick = null;
+        header.style.cursor = 'default';
+        if (arrow) arrow.style.display = 'none';
+        if (!nextMission) nextMission = m;
+      }
+    });
+
+    const pct = Math.round((unlockedCount / missions.length) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = unlockedCount + ' de ' + missions.length + ' missões';
+
+    const nextEl = document.getElementById('next-mission');
+    if (nextMission && unlockedCount < missions.length) {
+      nextEl.style.display = 'block';
+      document.getElementById('next-mission-name').textContent = nextMission.name;
+      updateCountdown(nextMission.unlockDate);
+    } else {
+      nextEl.style.display = 'none';
+    }
+
+    if (previewMode) {
+      missions.forEach(m => openCard(m.id));
+    } else if (unlockedCount > 0) {
+      const lastUnlocked = missions.filter(m => new Date() >= m.unlockDate).pop();
+      if (lastUnlocked) openCard(lastUnlocked.id);
+    }
+  }
+
+  function updateCountdown(target) {
+    function tick() {
+      const diff = target - new Date();
+      if (diff <= 0) { applyStates(); return; }
+      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('cd-mins').textContent  = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('cd-secs').textContent  = pad(Math.floor((diff % 60000) / 1000));
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  function toggleCard(id) {
+    const card = document.getElementById('card-' + id);
+    if (card.classList.contains('locked')) return;
+    const body  = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (arrow) arrow.classList.toggle('open', !isOpen);
+  }
+
+  function openCard(id) {
+    const body  = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    if (body) body.classList.add('open');
+    if (arrow) arrow.classList.add('open');
+  }
+
+  function buildNav() {
+    const menu = document.getElementById('navMenu');
+    menu.innerHTML = '';
+    const now = new Date();
+    missions.forEach(m => {
+      const unlocked = now >= m.unlockDate;
+      const item = document.createElement('div');
+      item.className = 'nav-item' + (unlocked ? '' : ' locked-item');
+      item.innerHTML = `
+        <div class="nav-item-icon">${m.icon}</div>
+        <div class="nav-item-info">
+          <strong>${m.name}</strong>
+          <span>${m.date}</span>
+        </div>
+        <span class="nav-item-tag ${unlocked ? 'tag-open' : 'tag-locked'}">${unlocked ? 'Aberta' : '🔒'}</span>
+      `;
+      if (unlocked) {
+        item.onclick = () => { goToMission(m.id); closeNav(); };
+      }
+      menu.appendChild(item);
+    });
+  }
+
+  function toggleNav() {
+    document.getElementById('navBtn').classList.toggle('open');
+    document.getElementById('navMenu').classList.toggle('open');
+  }
+
+  function closeNav() {
+    document.getElementById('navBtn').classList.remove('open');
+    document.getElementById('navMenu').classList.remove('open');
+  }
+
+  function goToMission(id) {
+    openCard(id);
+    const card = document.getElementById('card-' + id);
+    if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    const m = missions.find(x => x.id === id);
+    if (m) document.getElementById('navBtnText').textContent = m.icon + ' ' + m.name;
+  }
+
+  document.addEventListener('click', e => {
+    if (!document.getElementById('navDropdown').contains(e.target)) closeNav();
+  });
+
+  // Lightbox
+  const lb    = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+
+  function openLb(src, alt) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  document.querySelectorAll('.mission-img').forEach(img => {
+    img.addEventListener('click', () => openLb(img.src, img.alt));
+  });
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  applyStates();
+  buildNav();
+
+  // Deep link: ?dia=X abre direto naquela missão
+  const urlDia = parseInt(new URLSearchParams(location.search).get('dia') || '0');
+  if (urlDia && missions.find(m => m.id === urlDia)) {
+    setTimeout(() => {
+      openCard(urlDia);
+      document.getElementById('card-' + urlDia)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const m = missions.find(x => x.id === urlDia);
+      if (m) document.getElementById('navBtnText').textContent = m.icon + ' ' + m.name;
+    }, 150);
+  }
+</script>
+</body>
+</html>
